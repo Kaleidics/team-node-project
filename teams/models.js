@@ -12,8 +12,8 @@ const teamSchema = mongoose.Schema({
     membersLimit: Number,
     description: String,
     location: {
-        latitude: Number,
-        longitude: Number
+        lat: Number,
+        long: Number
     }
     // gameDate: { type: Date, default: Date.now },
     // created: { type: Date, default: Date.now }

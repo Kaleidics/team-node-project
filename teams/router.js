@@ -21,7 +21,7 @@ router.post('/', [jsonParser, jwtAuth], (req, res) => {
     console.log(req.user.username);
     User.findOne({ username: req.user.username})
         .then(user => {
-            console.log(user);
+            console.log(req.body);
             Teams.create({
                 members: {
                     creator: user._id,
@@ -32,8 +32,8 @@ router.post('/', [jsonParser, jwtAuth], (req, res) => {
                 membersLimit: req.body.membersLimit,
                 description: req.body.description,
                 location: {
-                    latitude: req.body.location.latitude,
-                    longitude: req.body.location.longitude
+                    lat: req.body.location.lat,
+                    long: req.body.location.long
                 }
                 // gameDate: req.body.gameDate,
                 // created: { type: Date, default: Date.now }

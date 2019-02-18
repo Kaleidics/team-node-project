@@ -9,6 +9,13 @@ const jsonParser = bodyParser.json();
 
 const jwtAuth = passport.authenticate('jwt', { session: false });
 
+//view all posts
+router.get('/', (req, res) => {
+    return Teams.find()
+        .then(teams => res.status(200).json(teams))
+        .catch(err => res.status(500).json({message: 'Internal server error'}));
+});
+
 //make a new post
 router.post('/', [jsonParser, jwtAuth], (req, res) => {
     console.log(req.user.username);

@@ -4,11 +4,13 @@ const express = require('express');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 const passport = require('passport');
+const bodyParser = require('body-parser');
 
 // Here we use destructuring assignment with renaming so the two variables
 // called router (from ./users and ./auth) have different names
 const { router: usersRouter } = require('./users');
 const { router: authRouter, localStrategy, jwtStrategy } = require('./auth');
+const { router: teamRouter } = require('./teams');
 
 mongoose.Promise = global.Promise;
 
@@ -33,8 +35,11 @@ app.use(function (req, res, next) {
 passport.use(localStrategy);
 passport.use(jwtStrategy);
 
+app.use(bodyParser.urlencoded({extended: true}));
+
 app.use('/api/users/', usersRouter);
 app.use('/api/auth/', authRouter);
+app.use('/api/teams/', teamRouter);
 
 const jwtAuth = passport.authenticate('jwt', { session: false });
 

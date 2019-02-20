@@ -36,7 +36,7 @@ passport.use(localStrategy);
 passport.use(jwtStrategy);
 
 app.use(bodyParser.urlencoded({extended: true}));
-
+app.use(express.static('public'));
 app.use('/api/users/', usersRouter);
 app.use('/api/auth/', authRouter);
 app.use('/api/teams/', teamRouter);

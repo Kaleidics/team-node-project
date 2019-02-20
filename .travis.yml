@@ -2,3 +2,10 @@ language: node_js
 node_js: node
 services:
 - mongodb
+deploy:
+  provider: heroku
+  api_key:
+    secure: MzDoKEqICGxixhfWchQDkiucyeeSBZBuUBD7iAsE7ZN8d/kXzw5dFvTV7nu4WPOuH3qfEeOePvP3X/oI8yndpaSS7RX6fvo4TfqYuSTZ3ckxBT/cDATtj7tpRiwRbM3hJSPquXbvkgbLADNfdNGeTXm3Xj+/Sr5gYi0hzaQ5jh7CxNd7ri7CDf4mpHbvxvmooTx2fagHj8dfAkcyxO7NaTXtuyHopnIaNA97aqOX5rT7ijsuP+RkHy+d0eS8e6OefbbCFj1E+PLmnEzCDY8E5vs7ST+iserbasO4t0/4hD8i55WD17thMzekFbJ9oMmel2EEj2XSKNQegN2d0Js4YPxFrSW21t0nNQ0xiiIjO0NsvIs8CdFaKdD6TQd2s2GrofVjhRumki8T7jAsz1fA9rEmJzdXFTv04fMAbJQkYzP3mP15huVoaUyMJDGOolBoIdD4dLq7t57TNrmyYzFwTvUTURvMK7urAa3Tnx9U2ThVraboCZ/ac4wjveW1KnArexy+ya6/q3Ff1nPuRNelMoRKBR2/74SmLdjFs5m1ro/kH/WpMRg5EplfPpDXaRSW0jEEU/RweWM4wSlO4h8S/L71jrZ1Ma67PRYwVDdCLMhGsWSOKcnikT4RSRv45Z7NK9cTEJUfw2m0fOYPJ1XSBpgbIWgrj1lK2Lufs4R/F6g=
+  app: immense-brushlands-16839
+  on:
+    repo: Kaleidics/team-node-project

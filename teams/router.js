@@ -9,6 +9,33 @@ const jsonParser = bodyParser.json();
 
 const jwtAuth = passport.authenticate('jwt', { session: false });
 
+
+// Auth to check if login id is same as parameter id
+// function userAuth(req, res, next) {
+//     Teams.findById(req.params.id)
+//         .then(team => {
+//             if (!team) return res.status(404).end();
+            
+//             if ( !== team.members.creator) {
+//                 throw {
+//                     code: 403,
+//                     reason: "No Permission",
+//                     message: "Not the logged username"
+//                 };
+//             }
+//             next();
+//         })
+//         .catch(err => {
+//             console.error(err);
+//             if (err.code) {
+//                 return res.status(err.code).json(err);
+//             }
+//             res.status(500).json({ message: "Internal server error" });
+//         });
+// }
+
+
+
 //view all posts
 router.get('/', (req, res) => {
     return Teams.find()
@@ -63,6 +90,16 @@ router.post('/', [jsonParser, jwtAuth], (req, res) => {
         .catch(err => {
             console.error(err);
             return res.status(500).json({message: 'Internal server error'});
+        });
+});
+
+//delete a post userAuth
+router.delete('/post/:id', jwtAuth, (req, res) => {
+    Teams.findByIdAndRemove(req.params.id)
+        .then(team => res.status(204).end())
+        .catch(err => {
+            console.error(4, err);
+            res.status(500).json({ message: "Internal server error" });
         });
 });
 

@@ -13,21 +13,21 @@
 </head>
 
 <body>
-    
+
     <header id="pre-nav" role="banner" class="nav">
         <ul class="navbar">
-            <li><a class='logo' href="./index.html">APP NAME</a></li>
+            <li><a class='logo' href="./index.html">APP NAME CREATE PATH</a></li>
             <li id="loginBtn"><a class="unique-1" href="#">Login</a></li>
             <li id="signUpBtn"><a class="unique-1" href="#">Sign Up</a></li>
         </ul>
     </header>
     <header id="post-nav" role="banner" class="nav hidden">
         <ul class="navbar">
-            <li><a class='logo' href="#">APP NAME</a></li>
+            <li><a class="logo" href="./index.html">APP NAME CREATE</a></li>
             <li id="profileBtn"><a class="unique-1" href="./profile.html">My Profile</a></li>
-            <li id="createBtn"><a class="unique-1" href="create.html">Create a Game</a></li>
-            <li><a id="findBtnn" class="unique-1" href="./find.html">Find a Game</a></li>
-            <li id="logoutBtn"><a class="unique-1" href="#">Logout</a></li>
+            <li id="createBtn"><a class="unique-0" href="./create.html">Create a Game</a></li>
+            <li><a id="findBtn" class="unique-1" href="./find.html">Find a Game</a></li>
+            <li id="logoutBtn"><a class="unique-1" href="./index.html">Logout</a></li>
         </ul>
     </header>
 
@@ -64,34 +64,35 @@
 
     <main>
         <!-- INITIAL LANDING PAGE -->
-        <div id="pre-container" class="main-pic">
-            <div class="pic-text first">
-                <div class="name-div"><h1>APP NAME</h1></div>
-                            <div class="tagline">
-                                <p>Pickup Basketball.</p><p> Create or Join a group.</p><p>Get a game going.</p>
-                            </div>
-                <!-- <a href="#"><i class="fas fa-angle-double-down"></i></a> -->
-            </div>
-
-        </div>
+        <!-- <div id="pre-container" class="main-pic">
+ 
+        </div> -->
+        
         <!-- CREATE A POST VIEW -->
-        <!-- <div id='post-container' class="main-pic hidden">
+        <div id='post-container' class="main-pic">
             <div class="form-container">
-                <form class="createTeam-form" role="form">
+                <form class="createTeamForm" role="form">
                     <fieldset>
                         <legend>Create a Game</legend>
-                        <input type="text" name="Title" placeholder="Title">
-                        <select name="Rules" id="">
+                        <label for="Title">Title</label>
+                        <input id="titleCreate" type="text" name="Title" placeholder="Type here" required>
+                        <label for="Rules">Rules</label>
+                        <select name="Rules" id="rulesCreate">
                             <option value="Half-Court">Half-Court</option>
                             <option value="Full-Court">Full-Court</option>
                         </select>
-                        <input type="number" name="PlayerLimit" min="1" max="99">
-                        <input type="text" name="Description" id="">
+                        <label for="PlayerLimit">Player Limit</label>
+                        <input id="playerLimitCreate" type="number" name="PlayerLimit" min="1" max="99" required>
+                        <label for="Description">Give us some details</label>
+                        <input id="descriptionCreate" type="text" name="Description" placeholder="Type here" id="create-des" required>
+                        <label for="">Hard coding location until gmaps integration</label>
+                        <input id="latCreate" type="number" name="lat" placeholder="lat" id="" step="0.0001" required>
+                        <input id="longCreate" type="number" name="long" placeholder="long" id="" step="0.0001" required>
                         <input type="submit">
                     </fieldset>
                 </form>
             </div>
-        </div> -->
+        </div>
 
         <section class="section section-light">
             <div>
@@ -140,32 +141,38 @@
                     perspiciatis?</p>
             </div>
         </section>
-    <footer>
-        <section class="section section-dark">
-            <div class="dark-section-inner">
-                <h2>Section Two</h2>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam et incidunt totam eveniet nesciunt
-                    dolorem vel
-                    animi similique voluptatibus! Molestiae at itaque modi exercitationem doloremque, iusto obcaecati
-                    est deserunt,
-                    quasi distinctio quos praesentium vel quod aliquam eaque amet saepe accusantium eius. Nam eveniet
-                    minus veniam
-                    inventore voluptates exercitationem blanditiis, repellendus culpa architecto. Nihil dolorum esse nam
-                    fuga sunt
-                    vel architecto assumenda fugiat delectus. Quidem laborum consequuntur, aliquid non minus consectetur
-                    autem
-                    itaque deleniti id enim, sit impedit, distinctio doloremque ratione odio commodi illum aspernatur
-                    dignissimos
-                    dolorum quam debitis perspiciatis possimus corrupti. Maxime blanditiis maiores ratione impedit
-                    cumque quia nam
-                    perspiciatis?</p>
-            </div>
-        </section>
-    </footer>
+        <footer>
+            <section class="section section-dark">
+                <div class="dark-section-inner">
+                    <h2>Section Two</h2>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam et incidunt totam eveniet
+                        nesciunt
+                        dolorem vel
+                        animi similique voluptatibus! Molestiae at itaque modi exercitationem doloremque, iusto
+                        obcaecati
+                        est deserunt,
+                        quasi distinctio quos praesentium vel quod aliquam eaque amet saepe accusantium eius. Nam
+                        eveniet
+                        minus veniam
+                        inventore voluptates exercitationem blanditiis, repellendus culpa architecto. Nihil dolorum esse
+                        nam
+                        fuga sunt
+                        vel architecto assumenda fugiat delectus. Quidem laborum consequuntur, aliquid non minus
+                        consectetur
+                        autem
+                        itaque deleniti id enim, sit impedit, distinctio doloremque ratione odio commodi illum
+                        aspernatur
+                        dignissimos
+                        dolorum quam debitis perspiciatis possimus corrupti. Maxime blanditiis maiores ratione impedit
+                        cumque quia nam
+                        perspiciatis?</p>
+                </div>
+            </section>
+        </footer>
 
-<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-    crossorigin="anonymous"></script>
-<script src="script.js"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.js"
+            integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+        <script src="script.js"></script>
 </body>
 
 </html>

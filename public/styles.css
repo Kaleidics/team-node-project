@@ -189,6 +189,19 @@ i {
     box-shadow: 0 5px 8px 0 rgb(0, 0, 0), 0 7px 20px 0 rgb(0, 0, 0);
 }
 
+.map-style {
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    background-color: #f4f4f4;
+    padding: 20px;
+}
+
+.allPosts {
+    list-style-type: none;
+    padding: 0;
+}
 /* modal's close button */
 .closeBtn {
     display: flex;
@@ -239,6 +252,7 @@ fieldset {
 .form-container {
     display: flex;
     justify-content: center;
+    margin: 0 auto;
 }
 
 .createTeamForm {
@@ -247,7 +261,7 @@ fieldset {
 
 #post-container {
     display: flex;
-    justify-content: center;
+    /* justify-content: center; */
     align-items: center;
 }
 

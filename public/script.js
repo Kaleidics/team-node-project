@@ -74,7 +74,7 @@ function submitLogin() {
 // =================  AUTH AJAX  ========================
 
 function SignUp() {
-    const url = 'http://localhost:8080/api/users/register';
+    const url = 'https://immense-brushlands-16839.herokuapp.com/api/users/register';
 
     const username = $('#usernameS').val();
     const password = $('#passwordS').val();
@@ -113,7 +113,7 @@ function SignUp() {
 }
 
 function login() {
-    const url = 'http://localhost:8080/api/auth/login';
+    const url = 'https://immense-brushlands-16839.herokuapp.com/api/auth/login';
 
     const username = $('#usernameL').val();
     const password = $('#passwordL').val();
@@ -172,7 +172,7 @@ function registerCreate() {
 //Event listener for the Find a Game button on navbar, triggers AJAX request for all posts
 function registerFind() {
     $('#findBtn').on('click', (event) => {
-        viewPosts();
+        location.reload();
     });
 }
 
@@ -188,7 +188,7 @@ function registerProfile() {
 //==================  TEAM ROUTES AJAX  =========================
 //AJAX function to create a team, triggered by form submit on Create a Game view
 function createTeam() {
-    const url = 'http://localhost:8080/api/teams/';
+    const url = 'https://immense-brushlands-16839.herokuapp.com/api/teams/';
 
     const localtoken = localStorage.getItem('localtoken');
     const title = $('#titleCreate').val();
@@ -225,7 +225,7 @@ function createTeam() {
 
 //AJAX function to view all posts, trigged by click event on nav button Find a Game
 function viewPosts() {
-    const url = 'http://localhost:8080/api/teams/';
+    const url = 'https://immense-brushlands-16839.herokuapp.com/api/teams/';
 
     return fetch(url)
     .then(res => res.json())
@@ -239,7 +239,7 @@ function viewPosts() {
 
 //AJAX function to view posts owned by Logged in User, and posts joined by Logged in user, triggered by click event on nav button My Profile
 function viewProfile() {
-    const base = 'http://localhost:8080/api/teams/';
+    const base = 'https://immense-brushlands-16839.herokuapp.com/api/teams/';
     const localtoken = localStorage.getItem('localtoken');
     const currentUserId = localStorage.getItem('currentUser');
     const url = base + currentUserId;
@@ -262,7 +262,7 @@ function viewProfile() {
 
 //AJAX function to view a single post, represented as a modal in the My Profile View, trigged by click event on a single post
 function viewSinglePost(postId) {
-    const base = 'http://localhost:8080/api/teams/post/';
+    const base = 'https://immense-brushlands-16839.herokuapp.com/api/teams/post/';
     const localtoken = localStorage.getItem('localtoken');
     const url = base + postId;
     console.log(url);
@@ -284,7 +284,7 @@ function viewSinglePost(postId) {
 
 //AJAX function to view a single post, represented as a modal in the Find a Game view, trigged by click event on a single post
 function viewSinglePost2(postId) {
-    const base = 'http://localhost:8080/api/teams/post/';
+    const base = 'https://immense-brushlands-16839.herokuapp.com/api/teams/post/';
     const localtoken = localStorage.getItem('localtoken');
     const url = base + postId;
     console.log(url);
@@ -404,7 +404,7 @@ function modalizePostFind(arr) {
                 <a href="#" class="closeBtn"><span class="cSpan">&times</span></a>
                 <div id="${_id}">
                 <div>
-                    <ul>
+                    <ul class="allPosts">
                         <li><h4>${title}<h4></li>
                         <li>Sport: ${sport}</li>
                         <li>Host: ${creator}</li>
@@ -412,6 +412,7 @@ function modalizePostFind(arr) {
                         <li>Current players: ${creator} ${joiners}</li>
                         <li>Description: <p>${description}</p></li>
                         <li>${lat},${long}</li>
+                        <div id='map' class="map-style"></div>
                         <li><button class="joinBtn">Join</button></li>
                     </ul>
                 </div>
@@ -419,6 +420,17 @@ function modalizePostFind(arr) {
             </div>
         </div>
     `)
+    var location = { lat: lat, lng: -long };
+    // The map, centered at Uluru
+    var map = new google.maps.Map(
+        document.getElementById('map'), {
+            zoom: 16, 
+            center: location, 
+            streetViewControl: false,
+            mapTypeControl: false 
+        });
+    // The marker, positioned at Uluru
+    var marker = new google.maps.Marker({ position: location, map: map });
 }
 //Remove the appended modal from modalizePost functions
 function profileCloseBtn() {
@@ -458,7 +470,7 @@ function deleteBtn() {
 }
 
 function deletePost(id) {
-    const base = 'http://localhost:8080/api/teams/post/';
+    const base = 'https://immense-brushlands-16839.herokuapp.com/api/teams/post/';
     const localtoken = localStorage.getItem('localtoken');
     const url = base + id;
     console.log(url);

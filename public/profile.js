@@ -1,7 +1,7 @@
 'use strict';
 
 function viewProfile() {
-    const base = 'http://localhost:8080/api/teams/';
+    const base = 'https://immense-brushlands-16839.herokuapp.com/api/teams/';
     const localtoken = localStorage.getItem('localtoken');
     const currentUserId = localStorage.getItem('currentUser');
     const url = base + currentUserId;

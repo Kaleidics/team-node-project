@@ -4,8 +4,8 @@ mongoose.Promise = global.Promise;
 
 const teamSchema = mongoose.Schema({
     members: {
-        creator: { type: mongoose.Schema.Types.ObjectId, ref: 'Player' },
-        joiners: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Player' }]
+        creator: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+        joiners: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
     },
     sport: String,
     title: String,

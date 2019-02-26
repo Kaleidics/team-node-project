@@ -92,7 +92,14 @@ router.post('/', [jsonParser, jwtAuth], (req, res) => {
             return res.status(500).json({message: 'Internal server error'});
         });
 });
-
+router.put('/update/:id', [jsonParser, jwtAuth], (req, res) => {
+    Teams.findByIdAndUpdate(req.params.id,
+        { $set: { ...req.body } }, { new: true })
+        .then(team => {
+            res.status(203).json(team);
+        })
+        .catch(err => res.status(500).json({message: err}));
+});
 //delete a post userAuth
 router.delete('/post/:id', jwtAuth, (req, res) => {
     Teams.findByIdAndRemove(req.params.id)

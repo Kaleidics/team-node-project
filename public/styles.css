@@ -183,7 +183,7 @@ i {
     /* top: 10vh; */
     /* left: 33vw; */
     background-color: #f4f4f4;
-    margin: 20% auto;
+    margin: 15vh auto;
     padding: 20px;
     max-width: 50%;
     box-shadow: 0 5px 8px 0 rgb(0, 0, 0), 0 7px 20px 0 rgb(0, 0, 0);
@@ -198,7 +198,7 @@ i {
     padding: 20px;
 }
 
-.allPosts {
+.postUl {
     list-style-type: none;
     padding: 0;
 }
@@ -257,6 +257,10 @@ fieldset {
 
 .createTeamForm {
     background: wheat;
+}
+
+.updateTeamForm {
+    margin: 10px;
 }
 
 #post-container {
@@ -334,7 +338,7 @@ fieldset {
 
 
 /* ==========================  MEDIA QUERIES  ========================== */
-@media(max-width: 1440px) {
+@media(max-width: 1460px) {
     .name-div {
         max-width: 40%;
     }
@@ -381,7 +385,7 @@ fieldset {
     }
 
     .tagline {
-        display: none;
+        /* display: none; */
         padding: 0;
         max-width: 100%;
     }

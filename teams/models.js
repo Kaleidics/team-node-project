@@ -11,6 +11,7 @@ const teamSchema = mongoose.Schema({
     title: String,
     membersLimit: Number,
     description: String,
+    address: String,
     location: {
         lat: Number,
         long: Number

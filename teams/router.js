@@ -39,6 +39,7 @@ const jwtAuth = passport.authenticate('jwt', { session: false });
 //view all posts
 router.get('/', (req, res) => {
     return Teams.find()
+        // .populate('members.joiners.username')
         .then(teams => res.status(200).json(teams))
         .catch(err => res.status(500).json({message: 'Internal server error'}));
 });
@@ -49,12 +50,16 @@ router.get('/:id', [jsonParser, jwtAuth], (req, res) => {
         .then(teams => res.status(200).json(teams))
         .catch(err => res.status(500).json({message: 'Internal server error'}));
 });
-
+//view modal post in find view
 router.get('/post/:id', [jsonParser, jwtAuth], (req, res) => {
     console.log(req.params.id);
     return Teams.findOne({_id: req.params.id})
-        .then(teams => res.status(200).json(teams))
-        .catch(err => res.status(500).json({message: 'Internal server error'}));
+        // .populate('members.joiners')
+        .then(function (team) {
+            // console.log('populate:', team.members.joiners);
+            res.status(200).json(team);
+        })
+        .catch(err => res.status(500).json({message: err}));
 });
 
 //make a new post
@@ -72,6 +77,7 @@ router.post('/', [jsonParser, jwtAuth], (req, res) => {
                 title: req.body.title,
                 membersLimit: req.body.membersLimit,
                 description: req.body.description,
+                address: req.body.address,
                 location: {
                     lat: req.body.location.lat,
                     long: req.body.location.long

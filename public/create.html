@@ -16,14 +16,14 @@
 
     <header id="pre-nav" role="banner" class="nav">
         <ul class="navbar">
-            <li><a class='logo' href="./index.html">APP NAME CREATE PATH</a></li>
+            <li><a class='logo' href="./index.html">FCF</a></li>
             <li id="loginBtn"><a class="unique-1" href="#">Login</a></li>
             <li id="signUpBtn"><a class="unique-1" href="#">Sign Up</a></li>
         </ul>
     </header>
     <header id="post-nav" role="banner" class="nav hidden">
         <ul class="navbar">
-            <li><a class="logo" href="./index.html">APP NAME CREATE</a></li>
+            <li><a class="logo" href="./index.html">FCF</a></li>
             <li id="profileBtn"><a class="unique-1" href="./profile.html">My Profile</a></li>
             <li id="createBtn"><a class="unique-0" href="./create.html">Create a Game</a></li>
             <li><a id="findBtn" class="unique-1" href="./find.html">Find a Game</a></li>
@@ -84,10 +84,12 @@
                         <label for="PlayerLimit">Player Limit</label>
                         <input id="playerLimitCreate" type="number" name="PlayerLimit" min="1" max="99" required>
                         <label for="Description">Give us some details</label>
-                        <input id="descriptionCreate" type="text" name="Description" placeholder="Type here" id="create-des" required>
-                        <label for="">Hard coding location until gmaps integration</label>
-                        <input id="latCreate" type="number" name="lat" placeholder="lat" id="" step="0.0001" required>
-                        <input id="longCreate" type="number" name="long" placeholder="long" id="" step="0.0001" required>
+                        <input id="descriptionCreate" type="text" name="Description" placeholder="Type here" id="create-des"  maxlength="100" required>
+                        <label for="">Search for a court to play at</label>
+                        <!-- <input id="latCreate" type="number" name="lat" placeholder="lat" id="" step="0.0001" required>
+                        <input id="longCreate" type="number" name="long" placeholder="long" id="" step="0.0001" required> -->
+                        <!-- <input id="address" type="text" required> -->
+                        <input id="search-input" type="text" required>
                         <input type="submit">
                     </fieldset>
                 </form>
@@ -173,6 +175,16 @@
         <script src="https://code.jquery.com/jquery-3.3.1.js"
             integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
         <script src="script.js"></script>
+        <script src="create.js"></script>
+        <!-- <script>
+            function mapsSearch() {
+                var input = document.getElementById('search-input');
+                var autocomplete = new google.maps.places.Autocomplete(input);
+            }
+        </script> -->
+        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCVE0EVrFMwT7F0tBXuStCz7mpfmrO_Hd4
+&libraries=places&callback=mapsSearch"></script>
+
 </body>
 
 </html>

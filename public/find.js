@@ -13,6 +13,11 @@ function viewPosts() {
         .catch(err => console.log(err));
 }
 
+function nice() {
+
+    $("html").niceScroll();
+
+}
 
 function documentReady() {
     viewPosts();

@@ -8,6 +8,7 @@ const teamSchema = mongoose.Schema({
         joiners: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
     },
     sport: String,
+    rules: String,
     title: String,
     membersLimit: Number,
     description: String,

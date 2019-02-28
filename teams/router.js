@@ -44,17 +44,17 @@ router.get('/', (req, res) => {
         .catch(err => res.status(500).json({message: 'Internal server error'}));
 });
 
-router.get('/:id', [jsonParser, jwtAuth], (req, res) => {
-    console.log(req.params.id);
-    return Teams.find({'members.creator': req.params.id})
-        .then(teams => res.status(200).json(teams))
-        .catch(err => res.status(500).json({message: 'Internal server error'}));
-});
+// router.get('/:id', [jsonParser, jwtAuth], (req, res) => {
+//     console.log('triggered the route', req.params.id);
+//     return Teams.find({'members.creator.username': req.params.id})
+//         .then(teams => res.status(200).json(teams))
+//         .catch(err => res.status(500).json({message: 'Internal server error'}));
+// });
 //view modal post in find view
 router.get('/post/:id', [jsonParser, jwtAuth], (req, res) => {
     console.log(req.params.id);
     return Teams.findOne({_id: req.params.id})
-        // .populate('members.joiners')
+        .populate('members.creator', 'username')
         .then(function (team) {
             // console.log('populate:', team.members.joiners);
             res.status(200).json(team);
@@ -74,6 +74,7 @@ router.post('/', [jsonParser, jwtAuth], (req, res) => {
                     joiners: []
                 },
                 sport: req.body.sport,
+                rules: req.body.rules,
                 title: req.body.title,
                 membersLimit: req.body.membersLimit,
                 description: req.body.description,

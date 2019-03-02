@@ -719,6 +719,22 @@ function registerArrow() {
 //     var input = document.getElementById('search-input');
 //     var autocomplete = new google.maps.places.Autocomplete(input);
 // }
+// document.getElementById('icon').onclick = function () {
+//     this.classList.toggle('change')
+// }
+
+function mobileNav() {
+    $('.content, #loginBtn, #signUpBtn').on('click', (event) => {
+        // console.log($('#icon'));
+        $('.content').toggleClass('change');
+        $('.mobileHide').toggle();
+        $('.nav').toggleClass('heightMobile');
+        $('.navbar li').toggleClass('overlaySpacing');
+        // $('#loginBtn').toggleClass('overlaySpacing');
+        // $('#signUpBtn').toggleClass('overlaySpacing');
+    });
+
+}
 
 
 function documentReady() {
@@ -749,6 +765,7 @@ function documentReady() {
     // registerUpdate();
     //
     // mapsSearch()
+    mobileNav();
 }
 
 $(documentReady);

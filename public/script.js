@@ -148,26 +148,14 @@ function login() {
             console.log('logged in');
         }
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+        console.log(err);
+        alert('Username or password do not match.')
+    });
 }
 // =========================================================//
 
 //================== AJAX EVENT LISTENERS  ==================
-//For the Create Game view, the button on the form
-// function registerCreate() {
-//     $('.createTeamForm').on('submit', (event) => {
-//         event.preventDefault();
-//         console.log('attempted the post request');
-//         if(localStorage.getItem('localtoken') === null) {
-//             alert('Login to make a post!');
-//             return;
-//         }
-//         else {
-//             console.log('logged in, attempting to post server');
-//             createTeam();
-//         }
-//     });
-// }
 
 //Event listener for the Find a Game button on navbar, triggers AJAX request for all posts
 function registerFind() {
@@ -235,38 +223,12 @@ function createTeam() {
                 .then(res => res.json())
                 .then(response => {
                     console.log(response);
+                    $('.createLegend').html('Success. See your post in Find Game');
                 })
                 .catch(err => console.log(err));
         })
         .catch(err => console.log(err));
-        // console.log("outside",lat, lng);
-
-
-    // const newPost = {
-    //     sport: sport,
-    //     title: title,
-    //     membersLimit: membersLimit,
-    //     description: description,
-    //     address: address,
-    //     location: {
-    //         lat: lat,
-    //         long: lng 
-    //     }
-    // }
-
-    // return fetch(url, {
-    //     method: 'POST',
-    //     body: JSON.stringify(newPost),
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //         Authorization: `Bearer ${localtoken}`
-    //     }
-    // })
-    // .then(res => res.json())
-    // .then(response => {
-    //     console.log(response);
-    // })
-    // .catch(err => console.log(err));
+        
 }
 
 //AJAX function to view all posts, trigged by click event on nav button Find a Game
@@ -306,195 +268,9 @@ function viewProfile() {
     .catch(err => console.log(err));
 }
 
-// //AJAX function to view a single post. Trigged by click event on a single post
-// function viewSinglePost(postId) {
-//     const base = 'https://immense-brushlands-16839.herokuapp.com/api/teams/post/';
-//     const localtoken = localStorage.getItem('localtoken');
-//     const url = base + postId;
-//     console.log(url);
-//     return fetch(url, {
-//         method: 'GET',
-//         headers: {
-//             'Content-Type': 'application/json',
-//             Authorization: `Bearer ${localtoken}`
-//         }
-//     })
-//     .then(res => res.json())
-//     .then(response => {
-//         console.log('find triggered');
-//         console.log(response);
-//         modalizePostProfile(response);
-//     })
-//     .catch(err => console.log(err));
-// }
 
-//AJAX function to view a single post, represented as a modal in the Find a Game view, trigged by click event on a single post
-// function viewSinglePost2(postId) {
-//     const base = 'https://immense-brushlands-16839.herokuapp.com/api/teams/post/';
-//     const localtoken = localStorage.getItem('localtoken');
-//     const url = base + postId;
-//     console.log(url);
-//     return fetch(url, {
-//         method: 'GET',
-//         headers: {
-//             'Content-Type': 'application/json',
-//             Authorization: `Bearer ${localtoken}`
-//         }
-//     })
-//     .then(res => res.json())
-//     .then(response => {
-//         console.log('find triggered');
-//         console.log(response);
-//         modalizePostFind(response);
-//     })
-//     .catch(err => console.log(err));
-// }
 
-//==============================================================//
-
-//==================== POPULATE FIND VIEW =====================
-//DOM manipulation that follows AJAX call for User's owned posts
-// function populateProfile(arr) {
-//     let items = ``;
-
-//     for (let i = 0; i < arr.length; i++) {
-//         const { title, sport, members, membersLimit, description, _id, address, rules } = arr[i];
-//         const { creator, joiners } = arr[i].members;
-//         const { lat, long } = arr[i].location;
-
-//         items = items.concat(`
-//             <div id="${_id}" class="post-item">
-//                 <div class="post-item-list">
-//                     <ul>
-//                         <li class="preTitle"><h3>${title}</h3></li>
-//                         <li class="preRules">Rules: ${rules}</li>
-//                         <li class="preMax">Looking for: ${membersLimit} players</li>
-//                         <li class="preDes">Description: <div>${description}</div></li>
-//                         <li class="preAdd">Location: <address>${address}</address></li>
-//                     </ul>
-//                 </div>
-//             </div>
-//         `);
-//     }
-//     $('#ownPosts').html(items);
-// }
-
-//DOM manipulation that follows AJAX call for Join Game view
-// function populatePosts(arr) {
-//     let items = ``;
-
-//     for (let i = 0; i < arr.length; i++) {
-//         const { title, sport, membersLimit, description, _id, address, rules } = arr[i];
-//         const { creator, joiners } = arr[i].members;
-//         const { lat, long } = arr[i].location;
-
-//         items = items.concat(`
-//             <div id="${_id}" class="findView post-item">
-//                 <div class="post-item-list">
-//                     <ul>
-//                         <li class="preTitle"><h3>${title}</h3></li>
-//                         <li class="preRules">Rules: ${rules}</li>
-//                         <li class="preMax">Looking for: ${membersLimit} players</li>
-//                         <li class="preDes">Description: <div>${description}</div></li>
-//                         <li class="preAdd">Location: <address>${address}</address></li>
-//                     </ul>
-//                 </div>
-//             </div>
-//         `);
-//         console.log('before initMap', lat, long, _id);
-//     }
-//     $('#view-container').html(items);
-// }
-
-//Creates a modal onclick in the Profile view for one post
-// function modalizePostProfile(arr) {
-//     const { title, sport, members, membersLimit, description, _id, address, rules } = arr;
-//     let { creator, joiners } = arr.members;
-//     const { lat, long } = arr.location;
-//     console.log('creator is:', creator);
-//     creator = creator.username;
-//     console.log('creator.username is:', creator);
-
-//     $('#post-container').append(`
-//     <div id="signup-Modal" class="modal unhide">
-//             <div class="class modal-content">
-//                 <a href="#" class="closeBtn"><span class="cSpan">&times</span></a>
-//                 <div id="${_id}" class="modal-pop">
-//                 <div>
-//                     <ul class="postUl">
-//                         <li><h3>${title}</h3></li>
-//                         <li>Host: ${creator}</li>
-//                         <li>Rules: ${rules}</li>
-//                         <li>Looking for: ${membersLimit} players</li>
-//                         <li>Current players: ${creator} ${joiners}</li>
-//                         <li>Description: <p>${description}</p></li>
-//                         <li>Location: <address>${address}</address></li>
-//                         <div id='map' class="map-style"></div>
-//                         <li><button class="update">Update</button></li>
-//                         <li><button class="delete">Delete</button></li>
-//                     </ul>
-//                 </div>
-//             </div>
-//             </div>
-//         </div>
-//     `)
-//     var location = { lat: lat, lng: long };
-//     // The map, centered at Uluru
-//     var map = new google.maps.Map(
-//         document.getElementById('map'), {
-//             zoom: 15,
-//             center: location,
-//             streetViewControl: false,
-//             mapTypeControl: false
-//         });
-//     var marker = new google.maps.Marker({ position: location, map: map });
-// }
-
-//Creates modal onclick in the Join Games view for one post
-// function modalizePostFind(arr) {
-//     const { title, sport, membersLimit, description, _id, address, rules } = arr;
-//     let { creator, joiners } = arr.members;
-//     const { lat, long } = arr.location;
-//     console.log('creator is:', JSON.stringify(creator));
-//     console.log('creator is:', creator);
-//     creator = creator.username;
-//     console.log('creator.username is:', creator);
-
-//     $('#post-container').append(`
-//     <div id="signup-Modal" class="modal unhide">
-//             <div class="class modal-content">
-//                 <a href="#" class="closeBtn"><span class="cSpan">&times</span></a>
-//                 <div id="${_id}">
-//                 <div>
-//                     <ul class="postUl">
-//                         <li class="postTitle"><h3>${title}</h3></li>
-//                         <li class="postHost">Host: ${creator}</li>
-//                         <li class="postRules">Rules: ${rules}</li>
-//                         <li class="postMaxPlayer">Looking for: ${membersLimit} players</li>
-//                         <li class="postCurrentPlayers">Current players: ${joiners}</li>
-//                         <li class="postDes">Description: <p>${description}</p></li>
-//                         <li class="postAdd">Location: <address>${address}</address></li>
-//                         <div id='map' class="map-style"></div>
-//                         <li class="postButton"><button class="joinBtn">Join</button></li>
-//                     </ul>
-//                 </div>
-//             </div>
-//             </div>
-//         </div>
-//     `)
-//     console.log('before map', lat, long);
-//     var location = { lat: lat, lng: long };
-//     // The map, centered at Uluru
-//     var map = new google.maps.Map(
-//         document.getElementById('map'), {
-//             zoom: 15,
-//             center: location,
-//             streetViewControl: false,
-//             mapTypeControl: false
-//         });
-//     var marker = new google.maps.Marker({ position: location, map: map });
-// }
-//Remove the appended modal from modalizePost functions
+//Remove the appended modal from modalizePost functions -- CHANGED TO MULTI PURPOSE CLOSE BTN NEEDS REFACTOR
 function profileCloseBtn() {
     $('#post-container').on('click', '.cSpan', (event) => {
         console.log('clicked profile close');
@@ -505,13 +281,6 @@ function profileCloseBtn() {
 // =========================================================//
 
 //==================== UPDATE and DELETE =====================
-
-// function popPost() {
-//     $('#ownPosts').on('click', '.post-item', (event) => {
-//         const singlePost = $(event.target).closest('div.post-item').attr('id');
-//         viewSinglePost(singlePost);
-//     });
-// }
 
 function popPost2() {
     $('#view-container').on('click', '.findView', (event) => {
@@ -560,197 +329,53 @@ function deletePost(id) {
     });
 }
 
-// function updateBtn() {
-//     $('#post-container').on('click', 'button.update', (event) => {
-//         console.log('clicked');
-//         const singlePost = $(event.target).parents('div.modal-pop').attr('id');
-//         // console.log(singlePost, event.target);
-//         generateUpdateForm(singlePost);
-//         // updatePost(singlePost);
-//         // $(event.target).closest('#signup-Modal').remove();
-//     });
-// }
 
-// function registerUpdate() {
-//     $('#post-container').on('submit', '.updateTeamForm', (event) => {
-//         event.preventDefault();
-//         console.log('attempted the put request');
-//         console.log($(event.target).parents('div.updateId'))
-//         const singlePost = $(event.target).parents('div.updateId').attr('id');
-//         callUpdate(singlePost);
-//     });
-// }
-
-// function callUpdate(id) {
-
-//     const localtoken = localStorage.getItem('localtoken');
-//     const title = $('#titleCreate').val();
-//     const membersLimit = $('#playerLimitCreate').val();
-//     const description = $('#descriptionCreate').val();
-//     const rules = $('#rulesCreate').val();
-//     // const lat = $('#latCreate').val();
-//     const long = $('#search-input').val();
-
-//     const base = 'https://immense-brushlands-16839.herokuapp.com/api/teams/update/';
-//     const url = base + id;
-//     console.log(url);
-
-//     const updatePost = {
-//         sport: sport,
-//         rules: rules,
-//         title: title,
-//         membersLimit: membersLimit,
-//         description: description,
-//         location: {
-//             lat: lat,
-//             long: long
-//         }
-//     }
-
-//     return fetch(url, {
-//         method: 'PUT',
-//         body: JSON.stringify(updatePost),
-//         headers: {
-//             'Content-Type': 'application/json',
-//             Authorization: `Bearer ${localtoken}`
-//         }
-//     })
-//         .then(response => {
-//             if (response.ok) {
-//                 console.log("updated");
-//                 // $(`div[id^=${}]`).remove();
-//                 return;
-//             }
-//             throw new Error(response.status);
-//         })
-//         .catch(err => {
-//             console.error(err);
-//         });
-// }
-
-// function generateUpdateForm(id) {
-
-//     $('#post-container').append(`
-//     <div id="${id}" class="updateId">
-//     <div id="signup-Modal" class="modal unhide">
-//             <div class="class modal-content">
-//                 <a href="#" class="closeBtn"><span class="cSpan">&times</span></a>
-//                 <div class="modal-pop">
-//                 <form class="updateTeamForm" role="form">
-//                     <fieldset>
-//                         <legend>Update this game</legend>
-//                         <label for="Title">Title</label>
-//                         <input id="titleCreate" type="text" name="Title" placeholder="Type here" required>
-//                         <label for="Rules">Rules</label>
-//                         <select name="Rules" id="rulesCreate">
-//                             <option value="Half-Court">Half-Court</option>
-//                             <option value="Full-Court">Full-Court</option>
-//                         </select>
-//                         <label for="PlayerLimit">Player Limit</label>
-//                         <input id="playerLimitCreate" type="number" name="PlayerLimit" min="1" max="99" required>
-//                         <label for="Description">Give us some details</label>
-//                         <input id="descriptionCreate" type="text" name="Description" placeholder="Type here" id="create-des" required>
-//                         <label for="search-input">Search for a court to play at</label>
-//                         <input id="search-input" type="text" name="search-input">
-//                         <input type="submit" value="Update">
-//                     </fieldset>
-//                 </form>
-//             </div>
-//             </div>
-//         </div>
-//     </div>
-//     `)
-//     var input = document.getElementById('search-input');
-//     var autocomplete = new google.maps.places.Autocomplete(input);
-// }
-
-// function updatePost(team, id) {
-//     const base = 'https://immense-brushlands-16839.herokuapp.com/api/teams/post/';
-//     const localtoken = localStorage.getItem('localtoken');
-//     const url = base + id;
-//     console.log(url);
-
-//     fetch(url, {
-//         headers: {
-//             'Content-Type': 'application/json',
-//             Authorization: `Bearer ${localtoken}`
-//         },
-//         method: 'PUT',
-//         body: JSON.stringify(team)
-//         })
-//         .then(response => {
-//             if (response.ok) {
-//                 return;
-//             }
-//             throw new Error(response.status);
-//         })
-//         .catch(err => {
-//             console.error(err);
-//         });
-// }
-// =========================================================//
-
-
-//==================== SANDBOX AREA =====================
-// function navBtn() {
-//     $('#profileBtn').on('click', (event) => {
-//         viewProfile();
-//         setTimeout(function () {
-//             window.location.href = './profile.html';
-//         }, 3000)
-//     })
-// }
 
 //==================== SCROLL CONTROLS =====================
 
-function registerArrow() {
-    $(".fas").on("click", () => {
-        $("html").animate({
-            scrollTop: 2000
-        }, 500)
-    });
-    $(window).on('scroll', () => {
-        $('.fas').addClass('hidden');
-    });
-}
-
-// =========================================================//
-// =========================================================//
-// function mapsSearch() {
-//     var input = document.getElementById('search-input');
-//     var autocomplete = new google.maps.places.Autocomplete(input);
-// }
-// document.getElementById('icon').onclick = function () {
-//     this.classList.toggle('change')
+// function registerArrow() {
+//     $(".fas").on("click", () => {
+//         $("html").animate({
+//             scrollTop: 2000
+//         }, 500)
+//     });
+//     $(window).on('scroll', () => {
+//         $('.fas').addClass('hidden');
+//     });
 // }
 
+
+//Spaghetti to control navbar responsiveness
 function mobileNav() {
     $('.content').on('click', (event) => {
-        // console.log($('#icon'));
-        // $('.mDelta').removeClass('mobileShow');
         $('.content').toggleClass('change');
-        // $('.mobileHide').toggle();
         $('.mDelta').toggle('mobileHide');
         $('.nav').toggleClass('heightMobile');
         $('.navbar li').toggleClass('overlaySpacing');
-        // $('#loginBtn').toggleClass('overlaySpacing');
-        // $('#signUpBtn').toggleClass('overlaySpacing');
+       
     });
+
     $('#loginBtn, #signUpBtn').on('click', (event) => {
-        if ($('.content').hasClass('change')) {
+        if($('.content').hasClass('change')){
             $('.content').toggleClass('change');
             $('.mDelta').toggle('mobileHide');
             $('.nav').removeClass('heightMobile');
             $('.navbar li').toggleClass('overlaySpacing');
         }
     })
-    if ($(window).width() > 1024) {
-        // $('.content').toggleClass('change');
-        // $('.mDelta').addClass('mobileShow');
-        // $('.nav').toggleClass('heightMobile');
-        // $('.navbar li').toggleClass('overlaySpacing');
-    }
 
+    $(window).on('resize', function () {
+        var width = $(window).width();
+        if (width > 1024) {
+            console.log(width);
+            $('.mDelta').show();
+        }
+
+        if (width < 1024 && !($('.content').hasClass('change'))) {
+            console.log(width);
+            $('.mDelta').hide();
+        }
+    });
 }
 
 
@@ -759,7 +384,6 @@ function documentReady() {
     pseudoState();
     logout();
     //SCROLL CONTROLS
-    registerArrow();
 //MODAL CONTROLS
     toggleOnSignUp();
     toggleOffSignUp();
@@ -769,19 +393,13 @@ function documentReady() {
     submitSignUp();
     submitLogin();
 //MAKE POST FOR CREATE A POST
-    // registerCreate();
     registerFind();
     registerProfile();
 //UPDATE DELETE
-    // popPost();
     popPost2();
 //profile controls
     profileCloseBtn();
     deleteBtn();
-    // updateBtn();
-    // registerUpdate();
-    //
-    // mapsSearch()
     mobileNav();
 }
 

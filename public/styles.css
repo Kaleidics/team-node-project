@@ -93,14 +93,14 @@ html, body {
 }
 
 /* arrow icon */
-i {
+/* i {
     color: #F1F4F5;
     margin-top: 30vh;
     cursor: pointer;
-}
+} */
 
 /* bouncing icon */
-i {
+/* i {
     animation: bounce 5s infinite;
 }
 
@@ -114,7 +114,7 @@ i {
   60% {
     transform: translateY(-20px);
   }
-}
+} */
 
 .tagline {
     letter-spacing: 3px;
@@ -162,6 +162,7 @@ i {
 }
 
 .dark-section-inner {
+    min-width: 50%;
     max-width: 50%;
 }
 /*//////////////////////////////////////////////////////////////*/
@@ -694,6 +695,7 @@ fieldset {
 .form-container {
     width: 100%;
     margin-top: 50px;
+    margin-bottom: 10px;
 }
     .navbar {
     padding: 0;

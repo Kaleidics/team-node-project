@@ -138,7 +138,7 @@ function modalizePostProfile(arr) {
     }
     else {
         $('.modal-content').niceScroll({
-            cursorcolor: "#ffa500",
+            cursorcolor: "#4285f4",
             cursoropacitymin: 0.8,
             background: "#bbb",
             cursorborder: "0",
@@ -223,6 +223,8 @@ function callUpdate(id) {
             .then(res => res.json())
             .then(response => {
                     console.log('should have worked', response);
+                    $('.updateSpan').html('Updated. Go back.')
+
             })
             .catch(err => console.log(err));
         })
@@ -235,7 +237,7 @@ function generateUpdateForm(id) {
     <div id="${id}" class="updateId">
     <div id="signup-Modal" class="modal unhide">
             <div class="class modal-content updateBox">
-                <a href="#" class="closeBtn"><span class="cSpan">Go back</span></a>
+                <a href="#" class="closeBtn"><span class="cSpan updateSpan">Go back</span></a>
                 <div class="modal-pop">
                 <form class="updateTeamForm" role="form">
                     <fieldset>
@@ -270,6 +272,7 @@ function documentReady() {
     viewProfile();
     popPost();
     updateBtn();
+    registerUpdate();
 }
 
 $(documentReady);

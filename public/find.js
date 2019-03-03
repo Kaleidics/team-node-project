@@ -114,7 +114,7 @@ function modalizePostFind(arr) {
     }
     else {
         $('.modal-content').niceScroll({
-            cursorcolor: "#666",
+            cursorcolor: "#4285f4",
             cursoropacitymin: 0.8,
             background: "#bbb",
             cursorborder: "0",

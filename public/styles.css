@@ -334,6 +334,7 @@ fieldset {
     display: flex;
     justify-content: center;
     border: none;
+    flex-direction: column;
 }
 /* /////////////////////////////////////////////////////////////////// */
 
@@ -367,6 +368,8 @@ fieldset {
     display: flex;
     /* justify-content: center; */
     align-items: center;
+    padding-top: 10vh;
+    padding-bottom: 10vh;
 }
 
 

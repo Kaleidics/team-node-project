@@ -29,7 +29,7 @@
     </header>
     <header id="post-nav" role="banner" class="nav hidden">
         <ul class="navbar">
-            <li class="logoSpace"><a class='logo' href="#">F<span class="orange">C</span>F</a>
+            <li class="logoSpace"><a class='logo' href="./index.html">F<span class="orange">C</span>F</a>
                 <div class="content" id=icon>
                     <div class="icon1"></div>
                     <div class="icon2"></div>
@@ -84,8 +84,8 @@
         <div id='post-container' class="main-pic">
             <div class="form-container">
                 <form class="createTeamForm" role="form">
-                    <fieldset>
-                        <legend>Create a Game</legend>
+                    <fieldset class="createFields">
+                        <legend class="createLegend">Create a Game</legend>
                         <label for="Title">Title</label>
                         <input id="titleCreate" type="text" name="Title" placeholder="Type here" required>
                         <label for="Rules">Rules</label>
@@ -95,17 +95,18 @@
                         </select>
                         <label for="PlayerLimit">Player Limit</label>
                         <input id="playerLimitCreate" type="number" name="PlayerLimit" min="1" max="99" required>
-                        <label for="Description">Give us some details</label>
+                        <label for="Description">Description</label>
                         <input id="descriptionCreate" type="text" name="Description" placeholder="Type here" id="create-des"  maxlength="100" required>
-                        <label for="">Search for a court to play at</label>
+                        <label for="search">Location</label>
                         <!-- <input id="latCreate" type="number" name="lat" placeholder="lat" id="" step="0.0001" required>
                         <input id="longCreate" type="number" name="long" placeholder="long" id="" step="0.0001" required> -->
                         <!-- <input id="address" type="text" required> -->
-                        <input id="search-input" type="text" required>
-                        <input type="submit">
+                        <input id="search-input" type="text" name='search' required>
+                        <input class="createSubmit" type="submit">
                     </fieldset>
                 </form>
             </div>
+            <div id="map" class="map-style createMapStyle"></div>
         </div>
 
         <section class="section section-light">
@@ -194,8 +195,8 @@
                 var autocomplete = new google.maps.places.Autocomplete(input);
             }
         </script> -->
-        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCVE0EVrFMwT7F0tBXuStCz7mpfmrO_Hd4
-&libraries=places&callback=mapsSearch"></script>
+                <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCVE0EVrFMwT7F0tBXuStCz7mpfmrO_Hd4
+                        &libraries=places"></script>
 
 </body>
 

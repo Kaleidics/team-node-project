@@ -23,7 +23,7 @@ html, body {
     padding: 5px 0;
     margin: 0;
     z-index: 100;
-    background-color: #fff;
+    background-color: #F3F3F1;
 }
 
 .navbar {
@@ -73,9 +73,12 @@ html, body {
 }
 
 .main-pic {
-    background-color: grey;
-    background-image: url('./assets/pic30.jpg');
+    background-color: #192025;
+    /* background-image: url('./assets/pic30.jpg'); */
     min-height: 70vh;
+}
+.pic {
+    background-image: url('./assets/pic30.jpg');
 }
 /* inner div of the parallax pic */
 .pic-text {
@@ -91,7 +94,7 @@ html, body {
 
 /* arrow icon */
 i {
-    color: #fff;
+    color: #F1F4F5;
     margin-top: 30vh;
     cursor: pointer;
 }
@@ -136,6 +139,7 @@ i {
     margin: 20px;
     font-weight: bold;
 }
+
 /*///////////////////////////////////////////////////////////////////// */
 
 /* =====================  LANDING SECTIONS OF TEXT  =================== */
@@ -153,7 +157,7 @@ i {
 }
 
 .section-dark {
-    background-color: #282e34;
+    background-color: #323640;
     color: #ddd;
 }
 
@@ -201,7 +205,16 @@ i {
     background-color: #f4f4f4;
     padding: 20px;
 }
-
+.createMapStyle {
+    border-radius: 3px;
+    height: 350px;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    background-color: #f4f4f4;
+    padding: 20px;
+    width: 45%;
+}
 .postUl {
     
     list-style-type: none;
@@ -210,20 +223,26 @@ i {
 /* modal's close button */
 .closeBtn {
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
     text-align: right;
-    color: darkgray;
+    color: #fff;
     float: right;
-    font-size: 30px;
+    font-size: 24px;
     text-decoration: none;
     cursor: default;
+    padding: 8px;
+    background: #4285f4;
 }
 
+
+.authLabel {
+    margin: 0 auto;
+}
 .cSpan {
     text-decoration: underline;
 }
 .cSpan:hover {
-    color: #666;
+    color: #192025;
     text-decoration: none;
     cursor: pointer;
     text-decoration: none;
@@ -237,9 +256,80 @@ i {
 .modal-forms {
     margin: 20px;
 }
+.update {
+    border: none;
+    background: #4285f4;
+    color: white;
+    border-radius: 3px;
+    width: 100px;
+    height: 33px;
+    cursor: pointer;
+}
+.update:hover, .delete:hover {
+    background: #111;
+}
+.options-row {
+    display: flex;
+    justify-content: space-between;
+}
 
+.delete {
+    border: none;
+    background: #ed5e68;
+    color: white;
+    border-radius: 3px;
+    width: 100px;
+    height: 33px;
+    cursor: pointer;
+}
+.createFields {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    border: none;
+    text-align: center;
+    color: #666;
+}
+.createFields * {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.createFields label {
+    font-weight: bold;
+}
+
+
+.createSubmit {
+    margin-top: 10px;
+    border: none;
+    background: #54BB9A;
+    color: white;
+    border-radius: 3px;
+    width: 100px;
+    height: 33px;
+    cursor: pointer;
+}
+#descriptionCreate {
+    text-align: initial;
+    width: 66%;
+    height: 50px;
+}
+.createLegend {
+    color: #fff;
+    width: 100%;
+    background: #54BB9A;
+    padding: 0;
+    border-radius: 3px;
+    font-size: 24px;
+}
 /* fieldset of the modals */
 fieldset {
+    height: 100%;
+    padding: 0;
+    margin: 0;
     display: flex;
     justify-content: center;
     border: none;
@@ -257,11 +347,15 @@ fieldset {
 .form-container {
     display: flex;
     justify-content: center;
-    margin: 0 auto;
+    /* margin: 0 auto; */
+    width: 45%;
+    height: 390px;
 }
 
 .createTeamForm {
-    background: wheat;
+    border-radius: 3px;
+    width: 90%;
+    background: #fff;
 }
 
 .updateTeamForm {
@@ -276,6 +370,29 @@ fieldset {
 
 
 
+.signup-fieldset, .login-fieldset{
+    text-align: center;
+}
+
+.signup-fieldset *, .login-fieldset *{
+    font-size: 20px;
+    margin: 0 auto;
+    padding: 5px;
+    text-align: center;
+}
+.form-login, .form-signup {
+    margin-top: 10px;
+    font-size: 16px;
+    padding: 0;
+    border: none;
+    background: #4285f4;
+    color: white;
+    border-radius: 3px;
+    width: 100px;
+    height: 33px;
+    cursor: pointer;
+    
+}
 
 /*//////////////////////////////////////////////////////////////////// */
 
@@ -295,11 +412,14 @@ fieldset {
 
 .createdGames, .joinedGames {
     /* font-family: spray; */
+    text-align: center;
     text-decoration: underline;
     text-decoration-color: #111;
     color: #e65722;
     
 }
+
+
 /* containers for profiles sections */
 #ownPosts {
     width: 90vw;
@@ -310,7 +430,7 @@ fieldset {
     
 }
 .post-item {
-   color: #fff;
+   color: #192025;
     display: flex;
     justify-content: center;
     /* background: rgba(0, 0, 0, 0.3); */
@@ -321,7 +441,7 @@ fieldset {
     border-radius: 10px;
     margin: 10px;
     cursor: pointer;
-    background: rgba(0 ,0 ,0, 0.5);
+    background: #EFEFF2;
     /* background: linear-gradient(245deg, rgba(244, 107, 69, 0.8), rgba(238, 168, 73, 0.9));
      */
     /* border: 2px solid rgba(0 ,0 ,0, 0.5); */
@@ -339,8 +459,18 @@ fieldset {
     height: 100%;
     list-style-type: none;
     padding: 0;
+    margin: 0;
+}
+.post-item-list ul h3 {
+    margin: 0;
+    background: orange;
+    border-radius: 5px;
+    width: 100%;
 }
 
+.post-item-list {
+    width: 100%;
+}
 
 /*//////////////////////////////////////////////////////////////////// */
 
@@ -367,7 +497,7 @@ fieldset {
     position: relative;
     background-color: #f4f4f4;
     margin: 15vh auto;
-    padding: 20px;
+    /* padding: 20px; */
    
     box-shadow: 0 5px 8px 0 rgb(0, 0, 0), 0 7px 20px 0 rgb(0, 0, 0);
 }
@@ -545,11 +675,26 @@ fieldset {
     }
 }
 @media(max-width: 1024px) {
-
+.createMapStyle {
+    border-radius: 3px;
+    height: 350px;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    background-color: #f4f4f4;
+    padding: 20px;
+    width: 80%;
+}
     .content {
         display: block;
     }
-
+#post-container {
+    flex-direction: column;
+}
+.form-container {
+    width: 100%;
+    margin-top: 50px;
+}
     .navbar {
     padding: 0;
     display: flex;
@@ -573,10 +718,10 @@ fieldset {
     display: flex;
     width: 95%;
     }
-    .mobileHide {
-        display: none;
+    
+    .mobileShow {
+        display: block;
     }
-
     .heightMobile {
         height: 100vh;
     }
@@ -609,7 +754,9 @@ fieldset {
     .pic-text {
         top:35%;
     }
-
+.mobileHide {
+        display: none;
+    }
 .modal-content {
     overflow-y: scroll;
     display: flex;

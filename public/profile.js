@@ -97,7 +97,7 @@ function modalizePostProfile(arr) {
     $('#post-container').append(`
     <div id="signup-Modal" class="modal unhide">
             <div class="class modal-content">
-                <a href="#" class="closeBtn"><span class="cSpan">&times</span></a>
+                <a href="#" class="closeBtn"><span class="cSpan">Go back</span></a>
                 <div id="${_id}" class="modal-pop">
                 <div>
                     <ul class="postUl">
@@ -109,8 +109,7 @@ function modalizePostProfile(arr) {
                         <li>Description: <p>${description}</p></li>
                         <li>Location: <address>${address}</address></li>
                         <div id='map' class="map-style"></div>
-                        <li><button class="update">Update</button></li>
-                        <li><button class="delete">Delete</button></li>
+                        <li class="options-row"><button class="update">Update</button><button class="delete">Delete</button></li>
                     </ul>
                 </div>
             </div>
@@ -127,14 +126,27 @@ function modalizePostProfile(arr) {
             mapTypeControl: false
         });
     var marker = new google.maps.Marker({ position: location, map: map });
-    $('.modal-content').niceScroll({
-        cursorcolor: "#ffa500",
-        cursoropacitymin: 0.8,
-        background: "#bbb",
-        cursorborder: "0",
-        autohidemode: false,
-        cursorminheight: 30
-    });
+    if (navigator.userAgent.match(/Android/i)
+        || navigator.userAgent.match(/webOS/i)
+        || navigator.userAgent.match(/iPhone/i)
+        || navigator.userAgent.match(/iPad/i)
+        || navigator.userAgent.match(/iPod/i)
+        || navigator.userAgent.match(/BlackBerry/i)
+        || navigator.userAgent.match(/Windows Phone/i)
+    ) {
+        console.log('this is mobile');
+    }
+    else {
+        $('.modal-content').niceScroll({
+            cursorcolor: "#ffa500",
+            cursoropacitymin: 0.8,
+            background: "#bbb",
+            cursorborder: "0",
+            autohidemode: false,
+            cursorminheight: 30
+        });
+    }
+   
 }
 
 
@@ -222,8 +234,8 @@ function generateUpdateForm(id) {
     $('#post-container').append(`
     <div id="${id}" class="updateId">
     <div id="signup-Modal" class="modal unhide">
-            <div class="class modal-content">
-                <a href="#" class="closeBtn"><span class="cSpan">&times</span></a>
+            <div class="class modal-content updateBox">
+                <a href="#" class="closeBtn"><span class="cSpan">Go back</span></a>
                 <div class="modal-pop">
                 <form class="updateTeamForm" role="form">
                     <fieldset>
@@ -252,6 +264,7 @@ function generateUpdateForm(id) {
     var input = document.getElementById('search-input');
     var autocomplete = new google.maps.places.Autocomplete(input);
 }
+
 
 function documentReady() {
     viewProfile();

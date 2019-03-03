@@ -72,7 +72,7 @@ function modalizePostFind(arr) {
     $('#post-container').append(`
     <div id="signup-Modal" class="modal unhide">
             <div class="class modal-content">
-                <a href="#" class="closeBtn"><span class="cSpan">&times</span></a>
+                <a href="#" class="closeBtn"><span class="cSpan">Go back</span></a>
                 <div id="${_id}">
                 <div>
                     <ul class="postUl">
@@ -84,7 +84,6 @@ function modalizePostFind(arr) {
                         <li class="postDes">Description: <p>${description}</p></li>
                         <li class="postAdd">Location: <address>${address}</address></li>
                         <div id='map' class="map-style"></div>
-                        <li class="postButton"><button class="joinBtn">Join</button></li>
                     </ul>
                 </div>
             </div>
@@ -102,15 +101,27 @@ function modalizePostFind(arr) {
             mapTypeControl: false
         });
     var marker = new google.maps.Marker({ position: location, map: map });
-    $('.modal-content').niceScroll({
-        cursorcolor: "#ffa500",
-        cursoropacitymin: 0.8,
-        background: "#bbb",
-        cursorborder: "0",
-        autohidemode: false,
-        cursorminheight: 30
-    });
-
+    if (
+        navigator.userAgent.match(/Android/i)
+        || navigator.userAgent.match(/webOS/i)
+        || navigator.userAgent.match(/iPhone/i)
+        || navigator.userAgent.match(/iPad/i)
+        || navigator.userAgent.match(/iPod/i)
+        || navigator.userAgent.match(/BlackBerry/i)
+        || navigator.userAgent.match(/Windows Phone/i)
+    ) {
+        console.log('this is mobile');
+    }
+    else {
+        $('.modal-content').niceScroll({
+            cursorcolor: "#666",
+            cursoropacitymin: 0.8,
+            background: "#bbb",
+            cursorborder: "0",
+            autohidemode: false,
+            cursorminheight: 30
+            });
+        }
 }
 
 function documentReady() {

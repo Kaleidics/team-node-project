@@ -19,7 +19,7 @@ function logout() {
         console.log('logged out');
         localStorage.removeItem('localtoken');
         localStorage.removeItem('currentUser');
-        location.reload();
+        location.href = './index.html'
     })
 }
 // =========================================================//
@@ -530,6 +530,7 @@ function deleteBtn() {
         console.log(singlePost, event.target);
         deletePost(singlePost);
         $(event.target).closest('#signup-Modal').remove();
+        $('body').removeClass('preventScroll');
     });
 }
 
@@ -724,15 +725,30 @@ function registerArrow() {
 // }
 
 function mobileNav() {
-    $('.content, #loginBtn, #signUpBtn').on('click', (event) => {
+    $('.content').on('click', (event) => {
         // console.log($('#icon'));
+        // $('.mDelta').removeClass('mobileShow');
         $('.content').toggleClass('change');
-        $('.mobileHide').toggle();
+        // $('.mobileHide').toggle();
+        $('.mDelta').toggle('mobileHide');
         $('.nav').toggleClass('heightMobile');
         $('.navbar li').toggleClass('overlaySpacing');
         // $('#loginBtn').toggleClass('overlaySpacing');
         // $('#signUpBtn').toggleClass('overlaySpacing');
     });
+    $('#loginBtn, #signUpBtn').on('click', (event) => {
+        $('.content').toggleClass('change');
+        $('.mDelta').toggle('mobileHide');
+        
+        $('.nav').removeClass('heightMobile');
+        $('.navbar li').toggleClass('overlaySpacing');
+    })
+    if ($(window).width() > 1024) {
+        // $('.content').toggleClass('change');
+        // $('.mDelta').addClass('mobileShow');
+        // $('.nav').toggleClass('heightMobile');
+        // $('.navbar li').toggleClass('overlaySpacing');
+    }
 
 }
 

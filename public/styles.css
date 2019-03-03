@@ -668,9 +668,9 @@ fieldset {
         padding: 0;
         max-width: 100%;
     }
-    .fas {
+    /* .fas {
         display: none;
-    }
+    } */
     .pic-text {
         top:20%;
     }
@@ -750,9 +750,9 @@ fieldset {
         padding: 0;
         max-width: 100%;
     }
-    .fas {
+    /* .fas {
         display: none;
-    }
+    } */
     .pic-text {
         top:35%;
     }

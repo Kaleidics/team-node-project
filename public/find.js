@@ -1,17 +1,16 @@
 'use strict';
 
+//AJAX function to view all posts, trigged by click event on nav button Find a Game
 function viewPosts() {
-    const url = 'https://immense-brushlands-16839.herokuapp.com/api/teams/';
-    console.log('triggered viewposts');
+    const url = 'http://localhost:8080/api/teams/';
     return fetch(url)
         .then(res => res.json())
         .then(response => {
-            console.log('find triggered');
-            console.log(response);
             populatePosts(response);
         })
         .catch(err => console.log(err));
 }
+
 
 function populatePosts(arr) {
     let items = ``;
@@ -34,16 +33,14 @@ function populatePosts(arr) {
                 </div>
             </div>
         `);
-        console.log('before initMap', lat, long, _id);
     }
     $('#view-container').html(items);
 }
 
 function viewSinglePost2(postId) {
-    const base = 'https://immense-brushlands-16839.herokuapp.com/api/teams/post/';
+    const base = 'http://localhost:8080/api/teams/post/';
     const localtoken = localStorage.getItem('localtoken');
     const url = base + postId;
-    console.log(url);
     return fetch(url, {
         method: 'GET',
         headers: {
@@ -53,8 +50,6 @@ function viewSinglePost2(postId) {
     })
         .then(res => res.json())
         .then(response => {
-            console.log('find triggered');
-            console.log(response);
             modalizePostFind(response);
         })
         .catch(err => console.log(err));
@@ -64,10 +59,7 @@ function modalizePostFind(arr) {
     const { title, sport, membersLimit, description, _id, address, rules } = arr;
     let { creator, joiners } = arr.members;
     const { lat, long } = arr.location;
-    console.log('creator is:', JSON.stringify(creator));
-    console.log('creator is:', creator);
     creator = creator.username;
-    console.log('creator.username is:', creator);
 
     $('#post-container').append(`
     <div id="signup-Modal" class="modal unhide">
@@ -90,7 +82,6 @@ function modalizePostFind(arr) {
             </div>
         </div>
     `)
-    console.log('before map', lat, long);
     var location = { lat: lat, lng: long };
     // The map, centered at Uluru
     var map = new google.maps.Map(

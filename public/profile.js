@@ -7,11 +7,10 @@
 
 //Initial load triggers payload of DOM elements. Calls populateProfile.
 function viewProfile() {
-    const base = 'https://immense-brushlands-16839.herokuapp.com/api/teams/';
+    const base = 'http://localhost:8080/api/teams/';
     const localtoken = localStorage.getItem('localtoken');
     const currentUserId = localStorage.getItem('currentUser');
     const url = base + currentUserId;
-    console.log(url);
     return fetch(url, {
         method: 'GET',
         headers: {
@@ -21,8 +20,6 @@ function viewProfile() {
     })
         .then(res => res.json())
         .then(response => {
-            console.log('find profile triggered');
-            console.log(response);
             populateProfile(response);
         })
         .catch(err => console.log(err));
@@ -54,6 +51,26 @@ function populateProfile(arr) {
     $('#ownPosts').html(items);
 }
 
+//AJAX function to view posts owned by Logged in User, and posts joined by Logged in user, triggered by click event on nav button My Profile
+function viewProfile() {
+    const base = 'http://localhost:8080/api/teams/';
+    const localtoken = localStorage.getItem('localtoken');
+    const currentUserId = localStorage.getItem('currentUser');
+    const url = base + currentUserId;
+    return fetch(url, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localtoken}`
+        }
+    })
+        .then(res => res.json())
+        .then(response => {
+            populateProfile(response);
+        })
+        .catch(err => console.log(err));
+}
+
 //Triggered by clicking a game post on profile page. Start of chain >> ViewSinglePost >> modalizePostProfile >> End.
 function popPost() {
     $('#ownPosts').on('click', '.post-item', (event) => {
@@ -65,10 +82,9 @@ function popPost() {
 
 //AJAX function to view a single post. ViewSinglePost >> modalizePostProfile >> End.
 function viewSinglePost(postId) {
-    const base = 'https://immense-brushlands-16839.herokuapp.com/api/teams/post/';
+    const base = 'http://localhost:8080/api/teams/post/';
     const localtoken = localStorage.getItem('localtoken');
     const url = base + postId;
-    console.log(url);
     return fetch(url, {
         method: 'GET',
         headers: {
@@ -78,8 +94,6 @@ function viewSinglePost(postId) {
     })
         .then(res => res.json())
         .then(response => {
-            console.log('find triggered');
-            console.log(response);
             modalizePostProfile(response);
         })
         .catch(err => console.log(err));
@@ -90,9 +104,7 @@ function modalizePostProfile(arr) {
     const { title, sport, members, membersLimit, description, _id, address, rules } = arr;
     let { creator, joiners } = arr.members;
     const { lat, long } = arr.location;
-    console.log('creator is:', creator);
     creator = creator.username;
-    console.log('creator.username is:', creator);
 
     $('#post-container').append(`
     <div id="signup-Modal" class="modal unhide">
@@ -152,12 +164,8 @@ function modalizePostProfile(arr) {
 
 function updateBtn() {
     $('#post-container').on('click', 'button.update', (event) => {
-        console.log('clicked');
         const singlePost = $(event.target).parents('div.modal-pop').attr('id');
-        // console.log(singlePost, event.target);
         generateUpdateForm(singlePost);
-        // updatePost(singlePost);
-        // $(event.target).closest('#signup-Modal').remove();
     });
 }
 
@@ -165,8 +173,6 @@ function updateBtn() {
 function registerUpdate() {
     $('#post-container').on('submit', '.updateTeamForm', (event) => {
         event.preventDefault();
-        console.log('attempted the put request');
-        console.log($(event.target).parents('div.updateId'))
         const singlePost = $(event.target).parents('div.updateId').attr('id');
         callUpdate(singlePost);
     });
@@ -174,9 +180,8 @@ function registerUpdate() {
 
 function callUpdate(id) {
 
-    const base = 'https://immense-brushlands-16839.herokuapp.com/api/teams/update/';
+    const base = 'http://localhost:8080/api/teams/update/';
     const url = base + id;
-    console.log(url);
 
     const localtoken = localStorage.getItem('localtoken');
     const title = $('#titleCreate').val();
@@ -184,11 +189,9 @@ function callUpdate(id) {
     const description = $('#descriptionCreate').val();
     const rules = $('#rulesCreate').val();
     const address = $('#search-input').val();
-    console.log('attempted new post', address);
 
 
     const googleQuery = address.replace(/\s/g, '+');
-    console.log(googleQuery);
     const geocodeBase = 'https://maps.googleapis.com/maps/api/geocode/json?address=';
     const geoKey = '&key=AIzaSyCVE0EVrFMwT7F0tBXuStCz7mpfmrO_Hd4';
     const geocodeUrl = geocodeBase + googleQuery + geoKey;
@@ -222,9 +225,7 @@ function callUpdate(id) {
             })
             .then(res => res.json())
             .then(response => {
-                    console.log('should have worked', response);
                     $('.updateSpan').html('Updated. Go back.')
-
             })
             .catch(err => console.log(err));
         })
@@ -255,7 +256,7 @@ function generateUpdateForm(id) {
                         <input id="descriptionCreate" type="text" name="Description" placeholder="Type here" id="create-des" required>
                         <label for="search-input">Search for a court to play at</label>
                         <input id="search-input" type="text" name="search-input">
-                        <input type="submit" value="Update">
+                        <input class="update" type="submit" value="Update">
                     </fieldset>
                 </form>
             </div>
@@ -265,8 +266,42 @@ function generateUpdateForm(id) {
     `)
     var input = document.getElementById('search-input');
     var autocomplete = new google.maps.places.Autocomplete(input);
+    
 }
 
+
+function deleteBtn() {
+    $('#post-container').on('click', 'button.delete', (event) => {
+        const singlePost = $(event.target).parents('div.modal-pop').attr('id');
+        deletePost(singlePost);
+        $(event.target).closest('#signup-Modal').remove();
+        $('body').removeClass('preventScroll');
+    });
+}
+
+function deletePost(id) {
+    const base = 'http://localhost:8080/api/teams/post/';
+    const localtoken = localStorage.getItem('localtoken');
+    const url = base + id;
+
+    fetch(url, {
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localtoken}`
+        },
+        method: 'DELETE'
+    })
+        .then(response => {
+            if (response.ok) {
+                $(`div[id^=${id}]`).remove();
+                return;
+            }
+            throw new Error(response.status);
+        })
+        .catch(err => {
+            console.error(err);
+        });
+}
 
 function documentReady() {
     viewProfile();

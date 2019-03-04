@@ -99,6 +99,7 @@ router.post('/', [jsonParser, jwtAuth], (req, res) => {
             return res.status(500).json({message: 'Internal server error'});
         });
 });
+
 router.put('/update/:id', [jsonParser, jwtAuth], (req, res) => {
     Teams.findByIdAndUpdate(req.params.id,
         { $set: { ...req.body } }, { new: true })

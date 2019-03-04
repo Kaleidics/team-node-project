@@ -1,41 +1,75 @@
-// function mapsSearch() {
-//     var input = document.getElementById('search-input');
-//     var autocomplete = new google.maps.places.Autocomplete(input);
-// }
+'use strict';
 
+//event listener for submit button
 function registerCreate() {
     $('.createTeamForm').on('submit', (event) => {
         event.preventDefault();
-        console.log('attempted the post request');
         if (localStorage.getItem('localtoken') === null) {
             alert('Login to make a post!');
             return;
         }
         else {
-            console.log('logged in, attempting to post server');
             createTeam();
         }
     });
 }
-// function generateMap() {
-//     var location = { lat: 37.0902, lng: -95.7129 };
-//     var map = new google.maps.Map(
-//         document.getElementById('map'), {
-//             zoom: 4,
-//             center: location,
-//             streetViewControl: false,
-//             mapTypeControl: false
-//         });
-//     var marker = new google.maps.Marker({ position: location, map: map });
 
-//     var input = document.getElementById('search-input');
-//     var autocomplete = new google.maps.places.Autocomplete(input);
+//Creates a new post
+function createTeam() {
+    const url = 'http://localhost:8080/api/teams/';
 
-//     $('#search-input').on('autocompletechange change', (event) => {
-//         console.log($('#search-input').val())
-//     })
-// }
+    const localtoken = localStorage.getItem('localtoken');
+    const title = $('#titleCreate').val();
+    const membersLimit = $('#playerLimitCreate').val();
+    const description = $('#descriptionCreate').val();
+    const rules = $('#rulesCreate').val();
+    const address = $('#search-input').val();
 
+
+    const googleQuery = address.replace(/\s/g, '+');
+    const geocodeBase = 'https://maps.googleapis.com/maps/api/geocode/json?address=';
+    const geoKey = '&key=AIzaSyCVE0EVrFMwT7F0tBXuStCz7mpfmrO_Hd4';
+    const geocodeUrl = geocodeBase + googleQuery + geoKey;
+
+    fetch(geocodeUrl)
+        .then(res => res.json())
+        .then(response => {
+            const { lat, lng } = response.results[0].geometry.location;
+            const newPost = {
+                sport: sport,
+                rules: rules,
+                title: title,
+                membersLimit: membersLimit,
+                description: description,
+                address: address,
+                location: {
+                    lat: lat,
+                    long: lng
+                }
+            }
+            return newPost;
+        })
+        .then(response => {
+            return fetch(url, {
+                method: 'POST',
+                body: JSON.stringify(response),
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${localtoken}`
+                }
+            })
+                .then(res => res.json())
+                .then(response => {
+                    $('.createLegend').html('Success. See your post in Find Game');
+                    $('.clear').val('');
+                })
+                .catch(err => console.log(err));
+        })
+        .catch(err => console.log(err));
+
+}
+
+//Google Maps API generates map
 function initMap() {
     var map = new google.maps.Map(document.getElementById('map'), {
         center: { lat: 40.7009, lng: -73.9880 },

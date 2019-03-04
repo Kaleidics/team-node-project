@@ -254,6 +254,7 @@ html, body {
     width: 100px;
     height: 33px;
     cursor: pointer;
+    margin-top: 5px;
 }
 .update:hover, .delete:hover {
     background: #192025;
@@ -271,6 +272,7 @@ html, body {
     width: 100px;
     height: 33px;
     cursor: pointer;
+    margin-top: 5px;
 }
 .createFields {
     height: 100%;
@@ -300,6 +302,10 @@ html, body {
     width: 100px;
     height: 33px;
     cursor: pointer;
+}
+
+.createSubmit:hover {
+    background: #192025;
 }
 #descriptionCreate {
     text-align: initial;

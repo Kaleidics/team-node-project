@@ -1,14 +1,11 @@
 'use strict'
-const sport = 'basketball';
+const sport = 'basketball';//originally meant to be for multiple sports, now its only basketball, used to fill deprecated form field, will remove later
 
 
 // ==================  SIMULATE STATES =====================
 //loads different navbars depending if jwt is in local storage
 function pseudoState() {
-    console.log('using pseudostate');
-    console.log('level 1 trigger');
     if (localStorage.getItem('localtoken')) {
-        console.log('triggered');
         $('#post-nav').addClass('unhidden');
         $('#pre-nav').addClass('hidden');
     }
@@ -16,7 +13,6 @@ function pseudoState() {
 
 function logout() {
     $('#logoutBtn').on('click', (event) => {
-        console.log('logged out');
         localStorage.removeItem('localtoken');
         localStorage.removeItem('currentUser');
         location.href = './index.html'
@@ -57,7 +53,6 @@ function toggleOffLogin() {
 function submitSignUp() {
     $('#signup-submit').on('submit', (event) => {
         event.preventDefault();
-        console.log('clicked');
         SignUp();
     });
 }
@@ -65,7 +60,6 @@ function submitSignUp() {
 function submitLogin() {
     $('#login-submit').on('submit', (event) => {
         event.preventDefault();
-        console.log('clicked');
         login();
     });
 }
@@ -74,7 +68,7 @@ function submitLogin() {
 // =================  AUTH AJAX  ========================
 
 function SignUp() {
-    const url = 'https://immense-brushlands-16839.herokuapp.com/api/users/register';
+    const url = 'http://localhost:8080/api/users/register';
 
     const username = $('#usernameS').val();
     const password = $('#passwordS').val();
@@ -92,7 +86,6 @@ function SignUp() {
         }
     })
     .then(response => {
-        console.log('signup triggered');
         //if response success trigger login modal
         if (response.status === 201){
             $('#signup-Modal').removeClass('unhide');
@@ -102,7 +95,6 @@ function SignUp() {
         else {
             return response.json()
             .then(response => {
-                console.log(response);
                 alert(`${response.location} ${response.message}`);
             })
             .catch(err => console.log(err));
@@ -113,7 +105,7 @@ function SignUp() {
 }
 
 function login() {
-    const url = 'https://immense-brushlands-16839.herokuapp.com/api/auth/login';
+    const url = 'http://localhost:8080/api/auth/login';
 
     const username = $('#usernameL').val();
     const password = $('#passwordL').val();
@@ -132,10 +124,8 @@ function login() {
     })
     .then(res => res.json())
     .then(response => {
-        console.log('login success', response);
         const authToken = response.authtoken;
         const userid = response.userid;
-        console.log(authToken);
         //store jwt
         localStorage.setItem('localtoken', authToken);
         localStorage.setItem('currentUser', userid);
@@ -145,12 +135,10 @@ function login() {
             $('#login-Modal').removeClass('unhide');
             $('#post-nav').removeClass('hidden');
             $('#pre-nav').addClass('hidden');
-            console.log('logged in');
         }
     })
     .catch(err => {
-        console.log(err);
-        alert('Username or password do not match.')
+        alert('Username or password do not match.');
     });
 }
 // =========================================================//
@@ -173,176 +161,27 @@ function registerProfile() {
 
 //============================================================//
 
-//==================  TEAM ROUTES AJAX  =========================
-//AJAX function to create a team, triggered by form submit on Create a Game view
-function createTeam() {
-    const url = 'https://immense-brushlands-16839.herokuapp.com/api/teams/';
-
-    const localtoken = localStorage.getItem('localtoken');
-    const title = $('#titleCreate').val();
-    const membersLimit = $('#playerLimitCreate').val();
-    const description = $('#descriptionCreate').val();
-    const rules = $('#rulesCreate').val();
-    const address = $('#search-input').val();
-    console.log('attempted new post', address);
-
-
-    const googleQuery = address.replace(/\s/g, '+');
-    console.log(googleQuery);
-    const geocodeBase = 'https://maps.googleapis.com/maps/api/geocode/json?address=';
-    const geoKey = '&key=AIzaSyCVE0EVrFMwT7F0tBXuStCz7mpfmrO_Hd4';
-    const geocodeUrl = geocodeBase + googleQuery + geoKey;
-    
-    fetch(geocodeUrl)
-        .then(res => res.json())
-        .then(response => {
-            const { lat, lng } = response.results[0].geometry.location;
-            const newPost = {
-                sport: sport,
-                rules: rules,
-                title: title,
-                membersLimit: membersLimit,
-                description: description,
-                address: address,
-                location: {
-                    lat: lat,
-                    long: lng
-                }
-            }
-            return newPost;
-        })
-        .then(response =>{
-            return fetch(url, {
-                method: 'POST',
-                body: JSON.stringify(response),
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${localtoken}`
-                }
-            })
-                .then(res => res.json())
-                .then(response => {
-                    console.log(response);
-                    $('.createLegend').html('Success. See your post in Find Game');
-                })
-                .catch(err => console.log(err));
-        })
-        .catch(err => console.log(err));
-        
-}
-
-//AJAX function to view all posts, trigged by click event on nav button Find a Game
-function viewPosts() {
-    const url = 'https://immense-brushlands-16839.herokuapp.com/api/teams/';
-
-    return fetch(url)
-    .then(res => res.json())
-    .then(response => {
-        console.log('find triggered');
-        console.log(response);
-        populatePosts(response);
-    })
-    .catch(err => console.log(err));
-}
-
-//AJAX function to view posts owned by Logged in User, and posts joined by Logged in user, triggered by click event on nav button My Profile
-function viewProfile() {
-    const base = 'https://immense-brushlands-16839.herokuapp.com/api/teams/';
-    const localtoken = localStorage.getItem('localtoken');
-    const currentUserId = localStorage.getItem('currentUser');
-    const url = base + currentUserId;
-    console.log(url);
-    return fetch(url, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${localtoken}`
-        }
-    })
-    .then(res => res.json())
-    .then(response => {
-        console.log('find profile triggered');
-        console.log(response);
-        populateProfile(response);
-    })
-    .catch(err => console.log(err));
-}
-
-
-
 //Remove the appended modal from modalizePost functions -- CHANGED TO MULTI PURPOSE CLOSE BTN NEEDS REFACTOR
 function profileCloseBtn() {
     $('#post-container').on('click', '.cSpan', (event) => {
-        console.log('clicked profile close');
         $(event.target).closest('#signup-Modal').remove();
         $('body').removeClass('preventScroll');
     });
 }
-// =========================================================//
 
 //==================== UPDATE and DELETE =====================
 
 function popPost2() {
     $('#view-container').on('click', '.findView', (event) => {
-        console.log('view container');
         const singlePost = $(event.target).closest('div.findView').attr('id');
-        console.log(singlePost);
         $('body').addClass('preventScroll');
         viewSinglePost2(singlePost);
     });
 }
 
-function deleteBtn() {
-    $('#post-container').on('click', 'button.delete', (event) => {
-        console.log('clicked');
-        const singlePost = $(event.target).parents('div.modal-pop').attr('id');
-        console.log(singlePost, event.target);
-        deletePost(singlePost);
-        $(event.target).closest('#signup-Modal').remove();
-        $('body').removeClass('preventScroll');
-    });
-}
-
-function deletePost(id) {
-    const base = 'https://immense-brushlands-16839.herokuapp.com/api/teams/post/';
-    const localtoken = localStorage.getItem('localtoken');
-    const url = base + id;
-    console.log(url);
-
-    fetch(url, {
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${localtoken}`
-        },
-        method: 'DELETE'
-    })
-    .then(response => {
-        if (response.ok) {
-            console.log("Deleted");
-            $(`div[id^=${id}]`).remove();
-            return;
-        }
-        throw new Error(response.status);
-    })
-    .catch(err => {
-        console.error(err);
-    });
-}
-
-
 
 //==================== SCROLL CONTROLS =====================
 
-// function registerArrow() {
-//     $(".fas").on("click", () => {
-//         $("html").animate({
-//             scrollTop: 2000
-//         }, 500)
-//     });
-//     $(window).on('scroll', () => {
-//         $('.fas').addClass('hidden');
-//     });
-// }
 
 
 //Spaghetti to control navbar responsiveness
@@ -367,12 +206,10 @@ function mobileNav() {
     $(window).on('resize', function () {
         var width = $(window).width();
         if (width > 1024) {
-            console.log(width);
             $('.mDelta').show();
         }
 
         if (width < 1024 && !($('.content').hasClass('change'))) {
-            console.log(width);
             $('.mDelta').hide();
         }
     });
@@ -383,7 +220,6 @@ function documentReady() {
 //SIMULATE STATES
     pseudoState();
     logout();
-    //SCROLL CONTROLS
 //MODAL CONTROLS
     toggleOnSignUp();
     toggleOffSignUp();
@@ -399,7 +235,6 @@ function documentReady() {
     popPost2();
 //profile controls
     profileCloseBtn();
-    deleteBtn();
     mobileNav();
 }
 

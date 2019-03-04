@@ -16,7 +16,7 @@ function registerCreate() {
 
 //Creates a new post
 function createTeam() {
-    const url = 'http://localhost:8080/api/teams/';
+    const url = 'https://immense-brushlands-16839.herokuapp.com/api/teams/';
 
     const localtoken = localStorage.getItem('localtoken');
     const title = $('#titleCreate').val();

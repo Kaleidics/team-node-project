@@ -68,7 +68,7 @@ function submitLogin() {
 // =================  AUTH AJAX  ========================
 
 function SignUp() {
-    const url = 'http://localhost:8080/api/users/register';
+    const url = 'https://immense-brushlands-16839.herokuapp.com/api/users/register';
 
     const username = $('#usernameS').val();
     const password = $('#passwordS').val();
@@ -105,7 +105,7 @@ function SignUp() {
 }
 
 function login() {
-    const url = 'http://localhost:8080/api/auth/login';
+    const url = 'https://immense-brushlands-16839.herokuapp.com/api/auth/login';
 
     const username = $('#usernameL').val();
     const password = $('#passwordL').val();

@@ -7,7 +7,7 @@
 
 //Initial load triggers payload of DOM elements. Calls populateProfile.
 function viewProfile() {
-    const base = 'http://localhost:8080/api/teams/';
+    const base = 'https://immense-brushlands-16839.herokuapp.com/api/teams/';
     const localtoken = localStorage.getItem('localtoken');
     const currentUserId = localStorage.getItem('currentUser');
     const url = base + currentUserId;
@@ -53,7 +53,7 @@ function populateProfile(arr) {
 
 //AJAX function to view posts owned by Logged in User, and posts joined by Logged in user, triggered by click event on nav button My Profile
 function viewProfile() {
-    const base = 'http://localhost:8080/api/teams/';
+    const base = 'https://immense-brushlands-16839.herokuapp.com/api/teams/';
     const localtoken = localStorage.getItem('localtoken');
     const currentUserId = localStorage.getItem('currentUser');
     const url = base + currentUserId;
@@ -82,7 +82,7 @@ function popPost() {
 
 //AJAX function to view a single post. ViewSinglePost >> modalizePostProfile >> End.
 function viewSinglePost(postId) {
-    const base = 'http://localhost:8080/api/teams/post/';
+    const base = 'https://immense-brushlands-16839.herokuapp.com/api/teams/post/';
     const localtoken = localStorage.getItem('localtoken');
     const url = base + postId;
     return fetch(url, {
@@ -180,7 +180,7 @@ function registerUpdate() {
 
 function callUpdate(id) {
 
-    const base = 'http://localhost:8080/api/teams/update/';
+    const base = 'https://immense-brushlands-16839.herokuapp.com/api/teams/update/';
     const url = base + id;
 
     const localtoken = localStorage.getItem('localtoken');
@@ -280,7 +280,7 @@ function deleteBtn() {
 }
 
 function deletePost(id) {
-    const base = 'http://localhost:8080/api/teams/post/';
+    const base = 'https://immense-brushlands-16839.herokuapp.com/api/teams/post/';
     const localtoken = localStorage.getItem('localtoken');
     const url = base + id;
 

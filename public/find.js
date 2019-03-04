@@ -2,7 +2,7 @@
 
 //AJAX function to view all posts, trigged by click event on nav button Find a Game
 function viewPosts() {
-    const url = 'http://localhost:8080/api/teams/';
+    const url = 'https://immense-brushlands-16839.herokuapp.com/api/teams/';
     return fetch(url)
         .then(res => res.json())
         .then(response => {
@@ -38,7 +38,7 @@ function populatePosts(arr) {
 }
 
 function viewSinglePost2(postId) {
-    const base = 'http://localhost:8080/api/teams/post/';
+    const base = 'https://immense-brushlands-16839.herokuapp.com/api/teams/post/';
     const localtoken = localStorage.getItem('localtoken');
     const url = base + postId;
     return fetch(url, {

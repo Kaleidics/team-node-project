@@ -17,7 +17,7 @@
     <header id="pre-nav" role="banner" class="nav">
         <ul class="navbar">
             <li class="logoSpace"><a class='logo' href="./index.html">F<span class="orange">C</span>F</a>
-                <div class="content" id=icon>
+                <div class="content" id="icon">
                     <div class="icon1"></div>
                     <div class="icon2"></div>
                     <div class="icon3"></div>
@@ -30,7 +30,7 @@
     <header id="post-nav" role="banner" class="nav hidden">
         <ul class="navbar">
             <li class="logoSpace"><a class='logo' href="./index.html">F<span class="orange">C</span>F</a>
-                <div class="content" id=icon>
+                <div class="content" id="icon2">
                     <div class="icon1"></div>
                     <div class="icon2"></div>
                     <div class="icon3"></div>
@@ -81,19 +81,19 @@
                 <form class="createTeamForm" role="form">
                     <fieldset class="createFields">
                         <legend class="createLegend" role="form">Create a Game</legend>
-                        <label for="Title">Title</label>
+                        <label for="titleCreate">Title</label>
                         <input id="titleCreate" class="clear" type="text" name="Title" placeholder="Type here" required>
-                        <label for="Rules">Rules</label>
+                        <label for="rulesCreate">Rules</label>
                         <select name="Rules" id="rulesCreate">
                             <option value="Half-Court">Half-Court</option>
                             <option value="Full-Court">Full-Court</option>
                         </select>
-                        <label for="PlayerLimit">Player Limit</label>
+                        <label for="playerLimitCreate">Player Limit</label>
                         <input id="playerLimitCreate" class="clear" type="number" name="PlayerLimit" min="1" max="99" required>
-                        <label for="Description">Description</label>
+                        <label for="descriptionCreate">Description</label>
                         <input id="descriptionCreate" class="clear" type="text" name="Description" placeholder="Type here"
                             id="create-des" maxlength="100" required>
-                        <label for="search">Location</label>
+                        <label for="search-input">Location</label>
                         <input id="search-input" class="clear" type="text" name='search' aria-controls="map" required>
                         <input class="createSubmit" class="clear" type="submit">
                     </fieldset>

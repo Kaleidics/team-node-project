@@ -74,7 +74,7 @@ function submitLogin() {
 // =================  AUTH AJAX  ========================
 
 function SignUp() {
-    const url = 'https://immense-brushlands-16839.herokuapp.com/api/users/register';
+    const url = 'http://localhost:8080/api/users/register';
 
     const username = $('#usernameS').val();
     const password = $('#passwordS').val();
@@ -113,7 +113,7 @@ function SignUp() {
 }
 
 function login() {
-    const url = 'https://immense-brushlands-16839.herokuapp.com/api/auth/login';
+    const url = 'http://localhost:8080/api/auth/login';
 
     const username = $('#usernameL').val();
     const password = $('#passwordL').val();
@@ -176,7 +176,7 @@ function registerProfile() {
 //==================  TEAM ROUTES AJAX  =========================
 //AJAX function to create a team, triggered by form submit on Create a Game view
 function createTeam() {
-    const url = 'https://immense-brushlands-16839.herokuapp.com/api/teams/';
+    const url = 'http://localhost:8080/api/teams/';
 
     const localtoken = localStorage.getItem('localtoken');
     const title = $('#titleCreate').val();
@@ -233,7 +233,7 @@ function createTeam() {
 
 //AJAX function to view all posts, trigged by click event on nav button Find a Game
 function viewPosts() {
-    const url = 'https://immense-brushlands-16839.herokuapp.com/api/teams/';
+    const url = 'http://localhost:8080/api/teams/';
 
     return fetch(url)
     .then(res => res.json())
@@ -247,7 +247,7 @@ function viewPosts() {
 
 //AJAX function to view posts owned by Logged in User, and posts joined by Logged in user, triggered by click event on nav button My Profile
 function viewProfile() {
-    const base = 'https://immense-brushlands-16839.herokuapp.com/api/teams/';
+    const base = 'http://localhost:8080/api/teams/';
     const localtoken = localStorage.getItem('localtoken');
     const currentUserId = localStorage.getItem('currentUser');
     const url = base + currentUserId;
@@ -304,7 +304,7 @@ function deleteBtn() {
 }
 
 function deletePost(id) {
-    const base = 'https://immense-brushlands-16839.herokuapp.com/api/teams/post/';
+    const base = 'http://localhost:8080/api/teams/post/';
     const localtoken = localStorage.getItem('localtoken');
     const url = base + id;
     console.log(url);

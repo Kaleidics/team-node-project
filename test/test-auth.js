@@ -39,40 +39,24 @@ describe('Auth endpoints', function () {
         return User.remove({});
     });
 
-    describe('/api/auth/login', function () {
-        it('Should reject requests with no credentials', function () {
-            return chai
-                .request(app)
-                .post('/api/auth/login')
-                .then(res =>
-                    expect(res).to.have.status(400)
-                )
-                .catch(err => {
-                    if (err instanceof chai.AssertionError) {
-                        throw err;
-                    }
-
-                    const res = err.response;
-                    expect(res).to.have.status(400);
+    it('Should return a valid auth token', function () {
+        return chai
+            .request(app)
+            .post('/api/auth/login')
+            .send({ username, password })
+            .then(res => {
+                expect(res).to.have.status(200);
+                expect(res.body).to.be.an('object');
+                const token = res.body.authtoken;
+                expect(token).to.be.a('string');
+                const payload = jwt.verify(token, JWT_SECRET, {
+                    algorithm: ['HS256']
                 });
-        });
-    
-        it('Should reject requests with incorrect usernames', function () {
-            return chai
-                .request(app)
-                .post('/api/auth/login')
-                .send({ username: 'wrongUsername', password })
-                .then(() =>
-                    expect(res).to.have.status(401)
-                )
-                .catch(err => {
-                    if (err instanceof chai.AssertionError) {
-                        throw err;
-                    }
-
-                    const res = err.response;
-                    expect(res).to.have.status(401);
+                expect(payload.user).to.deep.equal({
+                    username,
+                    firstName,
+                    lastName
                 });
-        });
+            });
     });
 });

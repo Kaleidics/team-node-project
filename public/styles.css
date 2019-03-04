@@ -75,7 +75,7 @@ html, body {
     min-height: 70vh;
 }
 .pic {
-    background-image: url('./assets/pic30.jpg');
+    background-image: url('./assets/pic30.webp');
 }
 /* inner div of the parallax pic */
 .pic-text {

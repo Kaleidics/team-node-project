@@ -1,18 +1,13 @@
-'use strict';
-global.DATABASE_URL = 'mongodb://localhost/team-finder-app';
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const jwt = require('jsonwebtoken');
 
 const { app, runServer, closeServer } = require('../server');
 const { User } = require('../users');
-const { JWT_SECRET } = require('../config');
+const { JWT_SECRET, TEST_DATABASE_URL } = require('../config');
 
 const expect = chai.expect;
 
-// This let's us make HTTP requests
-// in our tests.
-// see: https://github.com/chaijs/chai-http
 chai.use(chaiHttp);
 
 describe('Auth endpoints', function () {
@@ -22,7 +17,7 @@ describe('Auth endpoints', function () {
     const lastName = 'User';
 
     before(function () {
-        return runServer();
+        return runServer(TEST_DATABASE_URL);
     });
 
     after(function () {
@@ -44,7 +39,40 @@ describe('Auth endpoints', function () {
         return User.remove({});
     });
 
-   
+    describe('/api/auth/login', function () {
+        it('Should reject requests with no credentials', function () {
+            return chai
+                .request(app)
+                .post('/api/auth/login')
+                .then(res =>
+                    expect(res).to.have.status(400)
+                )
+                .catch(err => {
+                    if (err instanceof chai.AssertionError) {
+                        throw err;
+                    }
 
+                    const res = err.response;
+                    expect(res).to.have.status(400);
+                });
+        });
     
+        it('Should reject requests with incorrect usernames', function () {
+            return chai
+                .request(app)
+                .post('/api/auth/login')
+                .send({ username: 'wrongUsername', password })
+                .then(() =>
+                    expect(res).to.have.status(401)
+                )
+                .catch(err => {
+                    if (err instanceof chai.AssertionError) {
+                        throw err;
+                    }
+
+                    const res = err.response;
+                    expect(res).to.have.status(401);
+                });
+        });
+    });
 });

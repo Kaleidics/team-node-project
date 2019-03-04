@@ -308,6 +308,7 @@ function documentReady() {
     popPost();
     updateBtn();
     registerUpdate();
+    deleteBtn();
 }
 
 $(documentReady);

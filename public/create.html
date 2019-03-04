@@ -80,7 +80,7 @@
             <div class="form-container">
                 <form class="createTeamForm" role="form">
                     <fieldset class="createFields">
-                        <legend class="createLegend">Create a Game</legend>
+                        <legend class="createLegend" role="form">Create a Game</legend>
                         <label for="Title">Title</label>
                         <input id="titleCreate" class="clear" type="text" name="Title" placeholder="Type here" required>
                         <label for="Rules">Rules</label>
@@ -94,12 +94,12 @@
                         <input id="descriptionCreate" class="clear" type="text" name="Description" placeholder="Type here"
                             id="create-des" maxlength="100" required>
                         <label for="search">Location</label>
-                        <input id="search-input" class="clear" type="text" name='search' required>
-                        <input class="createSubmit" class="clear" type="submit">
+                        <input id="search-input" class="clear" type="text" name='search' aria-controls="map" required>
+                        <input class="createSubmit" class="clear" type="submit" aria-controls="form">
                     </fieldset>
                 </form>
             </div>
-            <div id="map" class="map-style createMapStyle"></div>
+            <div id="map" class="map-style createMapStyle" role="map"></div>
         </div>
 
         <section class="section section-light" role="region">

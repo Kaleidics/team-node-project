@@ -21,7 +21,7 @@ function populatePosts(arr) {
         const { lat, long } = arr[i].location;
 
         items = items.concat(`
-            <div id="${_id}" class="findView post-item">
+            <div id="${_id}" class="findView post-item" aria-controls="self-expanded-post">
                 <div class="post-item-list">
                     <ul>
                         <li class="preTitle"><h3>${title}</h3></li>
@@ -62,9 +62,9 @@ function modalizePostFind(arr) {
     creator = creator.username;
 
     $('#post-container').append(`
-    <div id="signup-Modal" class="modal unhide">
+    <div id="signup-Modal" class="modal unhide" role="self-expanded-post">
             <div class="class modal-content">
-                <a href="#" class="closeBtn"><span class="cSpan">Go back</span></a>
+                <a href="#" class="closeBtn" aria-controls="self-expanded-post"><span class="cSpan">Go back</span></a>
                 <div id="${_id}">
                 <div>
                     <ul class="postUl">

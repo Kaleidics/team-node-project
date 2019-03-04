@@ -35,7 +35,7 @@ function populateProfile(arr) {
         const { lat, long } = arr[i].location;
 
         items = items.concat(`
-            <div id="${_id}" class="post-item">
+            <div id="${_id}" class="post-item" aria-controls="self-expanded-post">
                 <div class="post-item-list">
                     <ul>
                         <li class="preTitle"><h3>${title}</h3></li>
@@ -107,9 +107,9 @@ function modalizePostProfile(arr) {
     creator = creator.username;
 
     $('#post-container').append(`
-    <div id="signup-Modal" class="modal unhide">
+    <div id="signup-Modal" class="modal unhide" role="self-expanded-post">
             <div class="class modal-content">
-                <a href="#" class="closeBtn"><span class="cSpan">Go back</span></a>
+                <a href="#" class="closeBtn" aria-controls="self-expanded-post"><span class="cSpan">Go back</span></a>
                 <div id="${_id}" class="modal-pop">
                 <div>
                     <ul class="postUl">
@@ -121,7 +121,7 @@ function modalizePostProfile(arr) {
                         <li>Description: <p>${description}</p></li>
                         <li>Location: <address>${address}</address></li>
                         <div id='map' class="map-style"></div>
-                        <li class="options-row"><button class="update">Update</button><button class="delete">Delete</button></li>
+                        <li class="options-row"><button class="update" aria-controls="update-popup">Update</button><button class="delete" aria-controls="self-expanded-post">Delete</button></li>
                     </ul>
                 </div>
             </div>
@@ -237,8 +237,8 @@ function generateUpdateForm(id) {
     $('#post-container').append(`
     <div id="${id}" class="updateId">
     <div id="signup-Modal" class="modal unhide">
-            <div class="class modal-content updateBox">
-                <a href="#" class="closeBtn"><span class="cSpan updateSpan">Go back</span></a>
+            <div class="class modal-content updateBox" role="update-popup">
+                <a href="#" class="closeBtn" role="go back"><span class="cSpan updateSpan" aria-controls="update-popup">Go back</span></a>
                 <div class="modal-pop">
                 <form class="updateTeamForm" role="form">
                     <fieldset>
@@ -256,7 +256,7 @@ function generateUpdateForm(id) {
                         <input id="descriptionCreate" type="text" name="Description" placeholder="Type here" id="create-des" required>
                         <label for="search-input">Search for a court to play at</label>
                         <input id="search-input" type="text" name="search-input">
-                        <input class="update" type="submit" value="Update">
+                        <input class="update" type="submit" value="Update" aria-controls="go back">
                     </fieldset>
                 </form>
             </div>

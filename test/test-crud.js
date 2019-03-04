@@ -12,7 +12,20 @@ const expect = chai.expect;
 
 chai.use(chaiHttp);
 
-describe('Auth endpoints', function () {
+const post = {
+    sport: 'sport',
+                rules: 'rules',
+                title: 'title',
+                membersLimit: 12,
+                description: 'description',
+                address: 'address',
+                location: {
+                    lat: 75,
+                    long: 75
+                }
+}
+
+describe('CRUD operations', function () {
     const username = 'exampleUser';
     const password = 'examplePass';
     const firstName = 'Example';
@@ -41,40 +54,24 @@ describe('Auth endpoints', function () {
         return User.remove({});
     });
 
-    it('Logging in should return a valid auth token', function() {
+    it('Should let you see everyones posts', function() {
         return chai
             .request(app)
-            .post('/api/auth/login')
-            .send({ username, password })
+            .get('/api/teams/')
             .then(res => {
                 expect(res).to.have.status(200);
-                expect(res.body).to.be.an('object');
-                const token = res.body.authtoken;
-                expect(token).to.be.a('string');
-                const payload = jwt.verify(token, JWT_SECRET, {
-                    algorithm: ['HS256']
-                });
-                expect(payload.user).to.deep.equal({
-                    username,
-                    firstName,
-                    lastName
-                });
+                expect(res.body).to.be.an('array');
             });
     });
 
-    it('Signing up should add a new instance to the database', function() {
+    it('Should fail if not valid token', function() {
         return chai
             .request(app)
-            .post('/api/users/register')
-            .send({ username: 'mochatest', password: '123456', firstName: 'test', lastName: 'test'})
+            .post('/api/teams')
+            .set('Authorization', '')
+            .send(post)
             .then(res => {
-                expect(res).to.have.status(201);
-                expect(res.body).to.be.an('object');
-                expect(res.body).to.deep.equal({
-                    username: 'mochatest',
-                    firstName: 'test',
-                    lastName: 'test'
-                });
+                expect(res).to.have.status(401);
             });
     });
 });

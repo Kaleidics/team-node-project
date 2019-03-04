@@ -101,7 +101,7 @@ function modalizePostFind(arr) {
         || navigator.userAgent.match(/BlackBerry/i)
         || navigator.userAgent.match(/Windows Phone/i)
     ) {
-        console.log('this is mobile');
+       
     }
     else {
         $('.modal-content').niceScroll({

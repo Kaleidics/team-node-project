@@ -7,7 +7,7 @@
 
 //Initial load triggers payload of DOM elements. Calls populateProfile.
 function viewProfile() {
-    const base = 'http://localhost:8080/api/teams/';
+    const base = 'https://immense-brushlands-16839.herokuapp.com/api/teams/';
     const localtoken = localStorage.getItem('localtoken');
     const currentUserId = localStorage.getItem('currentUser');
     const url = base + currentUserId;
@@ -65,7 +65,7 @@ function popPost() {
 
 //AJAX function to view a single post. ViewSinglePost >> modalizePostProfile >> End.
 function viewSinglePost(postId) {
-    const base = 'http://localhost:8080/api/teams/post/';
+    const base = 'https://immense-brushlands-16839.herokuapp.com/api/teams/post/';
     const localtoken = localStorage.getItem('localtoken');
     const url = base + postId;
     console.log(url);
@@ -174,7 +174,7 @@ function registerUpdate() {
 
 function callUpdate(id) {
 
-    const base = 'http://localhost:8080/api/teams/update/';
+    const base = 'https://immense-brushlands-16839.herokuapp.com/api/teams/update/';
     const url = base + id;
     console.log(url);
 

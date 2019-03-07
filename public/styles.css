@@ -215,7 +215,8 @@ html, body {
     text-decoration: none;
     cursor: default;
     padding: 25px;
-    background: #4285f4;
+    background: #192025;
+    /* background: #4285f4; */
     align-items: center;
 }
 
@@ -392,13 +393,22 @@ fieldset {
     font-size: 16px;
     padding: 0;
     border: none;
-    background: #4285f4;
-    color: white;
+    background: #ff6600;
+    /* background: #4285f4; */
+    color: #fff;
     border-radius: 3px;
     width: 100px;
     height: 33px;
     cursor: pointer;
     
+}
+
+.form-login:hover, .form-signup:hover {
+    background: #192025;
+}
+
+.closeBtn:hover {
+    background: #ff6600;
 }
 
 /*//////////////////////////////////////////////////////////////////// */

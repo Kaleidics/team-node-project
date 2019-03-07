@@ -63,18 +63,25 @@ html, body {
 /* ================  PARALLAX BACKGROUND  =====================*/
 /* main pic background position control */
 .main-pic{
+    /* position: relative;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed; */
+}
+
+.main-pic {
+    background-color: #192025;
+    
+     /* background: linear-gradient(225deg, #192025, #999); */
+    min-height: 70vh;
+}
+.pic {
     position: relative;
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
-}
-
-.main-pic {
-    background-color: #192025;
-    min-height: 70vh;
-}
-.pic {
     background-image: url('./assets/pic30.webp');
 }
 /* inner div of the parallax pic */
@@ -570,7 +577,7 @@ fieldset {
     }
 }
 
-@media(max-width: 1260px) {
+@media(max-width: 1280px) {
     .name-div {
         max-width: 55%;
     }

@@ -2,6 +2,7 @@
 <div align="center">
   <img src="https://i.imgur.com/shp2up0.jpg" width="800px" height="450px">
 </div>
+This was my first attempt at a fullstack application. I am doing a complete remake using React and Node, now that I have a much greatergrasp of the technologies.
 
 ## Pickup basketball made easy.
 **Create or find a game of pickup basketball. Now you can have other people watch you air ball.**

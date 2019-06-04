@@ -1,40 +1,44 @@
-'use strict';
-// function mapsSearch() {
-//     var input = document.getElementById('search-input');
-//     var autocomplete = new google.maps.places.Autocomplete(input);
-// }
-
+"use strict";
 
 //Initial load triggers payload of DOM elements. Calls populateProfile.
 function viewProfile() {
-    const base = 'https://immense-brushlands-16839.herokuapp.com/api/teams/';
-    const localtoken = localStorage.getItem('localtoken');
-    const currentUserId = localStorage.getItem('currentUser');
-    const url = base + currentUserId;
-    return fetch(url, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${localtoken}`
-        }
+  const base = "https://immense-brushlands-16839.herokuapp.com/api/teams/";
+  const localtoken = localStorage.getItem("localtoken");
+  const currentUserId = localStorage.getItem("currentUser");
+  const url = base + currentUserId;
+  return fetch(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localtoken}`
+    }
+  })
+    .then(res => res.json())
+    .then(response => {
+      populateProfile(response);
     })
-        .then(res => res.json())
-        .then(response => {
-            populateProfile(response);
-        })
-        .catch(err => console.log(err));
+    .catch(err => console.log(err));
 }
 
 //Called by view profile for DOM manipulation.
 function populateProfile(arr) {
-    let items = ``;
+  let items = ``;
 
-    for (let i = 0; i < arr.length; i++) {
-        const { title, sport, members, membersLimit, description, _id, address, rules } = arr[i];
-        const { creator, joiners } = arr[i].members;
-        const { lat, long } = arr[i].location;
+  for (let i = 0; i < arr.length; i++) {
+    const {
+      title,
+      sport,
+      members,
+      membersLimit,
+      description,
+      _id,
+      address,
+      rules
+    } = arr[i];
+    const { creator, joiners } = arr[i].members;
+    const { lat, long } = arr[i].location;
 
-        items = items.concat(`
+    items = items.concat(`
             <div id="${_id}" class="post-item" aria-controls="self-expanded-post">
                 <div class="post-item-list">
                     <ul>
@@ -47,66 +51,77 @@ function populateProfile(arr) {
                 </div>
             </div>
         `);
-    }
-    $('#ownPosts').html(items);
+  }
+  $("#ownPosts").html(items);
 }
 
 //AJAX function to view posts owned by Logged in User, and posts joined by Logged in user, triggered by click event on nav button My Profile
 function viewProfile() {
-    const base = 'https://immense-brushlands-16839.herokuapp.com/api/teams/';
-    const localtoken = localStorage.getItem('localtoken');
-    const currentUserId = localStorage.getItem('currentUser');
-    const url = base + currentUserId;
-    return fetch(url, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${localtoken}`
-        }
+  const base = "https://immense-brushlands-16839.herokuapp.com/api/teams/";
+  const localtoken = localStorage.getItem("localtoken");
+  const currentUserId = localStorage.getItem("currentUser");
+  const url = base + currentUserId;
+  return fetch(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localtoken}`
+    }
+  })
+    .then(res => res.json())
+    .then(response => {
+      populateProfile(response);
     })
-        .then(res => res.json())
-        .then(response => {
-            populateProfile(response);
-        })
-        .catch(err => console.log(err));
+    .catch(err => console.log(err));
 }
 
 //Triggered by clicking a game post on profile page. Start of chain >> ViewSinglePost >> modalizePostProfile >> End.
 function popPost() {
-    $('#ownPosts').on('click', '.post-item', (event) => {
-        const singlePost = $(event.target).closest('div.post-item').attr('id');
-        viewSinglePost(singlePost);
-        $('body').addClass('preventScroll');
-    });
+  $("#ownPosts").on("click", ".post-item", event => {
+    const singlePost = $(event.target)
+      .closest("div.post-item")
+      .attr("id");
+    viewSinglePost(singlePost);
+    $("body").addClass("preventScroll");
+  });
 }
 
 //AJAX function to view a single post. ViewSinglePost >> modalizePostProfile >> End.
 function viewSinglePost(postId) {
-    const base = 'https://immense-brushlands-16839.herokuapp.com/api/teams/post/';
-    const localtoken = localStorage.getItem('localtoken');
-    const url = base + postId;
-    return fetch(url, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${localtoken}`
-        }
+  const base = "https://immense-brushlands-16839.herokuapp.com/api/teams/post/";
+  const localtoken = localStorage.getItem("localtoken");
+  const url = base + postId;
+  return fetch(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localtoken}`
+    }
+  })
+    .then(res => res.json())
+    .then(response => {
+      modalizePostProfile(response);
     })
-        .then(res => res.json())
-        .then(response => {
-            modalizePostProfile(response);
-        })
-        .catch(err => console.log(err));
+    .catch(err => console.log(err));
 }
 
 //DOM Manipulation create a Modal. modalizePostProfile >> End.
 function modalizePostProfile(arr) {
-    const { title, sport, members, membersLimit, description, _id, address, rules } = arr;
-    let { creator, joiners } = arr.members;
-    const { lat, long } = arr.location;
-    creator = creator.username;
+  const {
+    title,
+    sport,
+    members,
+    membersLimit,
+    description,
+    _id,
+    address,
+    rules
+  } = arr;
+  let { creator, joiners } = arr.members;
+  const { lat, long } = arr.location;
+  creator = creator.username;
 
-    $('#post-container').append(`
+  $("#post-container").append(`
     <div id="signup-Modal" class="modal unhide" role="self-expanded-post">
             <div class="class modal-content">
                 <a href="#" class="closeBtn" aria-controls="self-expanded-post"><span class="cSpan">Go back</span></a>
@@ -127,114 +142,112 @@ function modalizePostProfile(arr) {
             </div>
             </div>
         </div>
-    `)
-    var location = { lat: lat, lng: long };
-    // The map, centered at Uluru
-    var map = new google.maps.Map(
-        document.getElementById('map'), {
-            zoom: 15,
-            center: location,
-            streetViewControl: false,
-            mapTypeControl: false
-        });
-    var marker = new google.maps.Marker({ position: location, map: map });
-    if (navigator.userAgent.match(/Android/i)
-        || navigator.userAgent.match(/webOS/i)
-        || navigator.userAgent.match(/iPhone/i)
-        || navigator.userAgent.match(/iPad/i)
-        || navigator.userAgent.match(/iPod/i)
-        || navigator.userAgent.match(/BlackBerry/i)
-        || navigator.userAgent.match(/Windows Phone/i)
-    ) {
-       
-    }
-    else {
-        $('.modal-content').niceScroll({
-            cursorcolor: "#4285f4",
-            cursoropacitymin: 0.8,
-            background: "#bbb",
-            cursorborder: "0",
-            autohidemode: false,
-            cursorminheight: 30
-        });
-    }
-   
+    `);
+  var location = { lat: lat, lng: long };
+  // The map, centered at Uluru
+  var map = new google.maps.Map(document.getElementById("map"), {
+    zoom: 15,
+    center: location,
+    streetViewControl: false,
+    mapTypeControl: false
+  });
+  var marker = new google.maps.Marker({ position: location, map: map });
+  if (
+    navigator.userAgent.match(/Android/i) ||
+    navigator.userAgent.match(/webOS/i) ||
+    navigator.userAgent.match(/iPhone/i) ||
+    navigator.userAgent.match(/iPad/i) ||
+    navigator.userAgent.match(/iPod/i) ||
+    navigator.userAgent.match(/BlackBerry/i) ||
+    navigator.userAgent.match(/Windows Phone/i)
+  ) {
+  } else {
+    $(".modal-content").niceScroll({
+      cursorcolor: "#4285f4",
+      cursoropacitymin: 0.8,
+      background: "#bbb",
+      cursorborder: "0",
+      autohidemode: false,
+      cursorminheight: 30
+    });
+  }
 }
-
 
 function updateBtn() {
-    $('#post-container').on('click', 'button.update', (event) => {
-        const singlePost = $(event.target).parents('div.modal-pop').attr('id');
-        generateUpdateForm(singlePost);
-    });
+  $("#post-container").on("click", "button.update", event => {
+    const singlePost = $(event.target)
+      .parents("div.modal-pop")
+      .attr("id");
+    generateUpdateForm(singlePost);
+  });
 }
 
-
 function registerUpdate() {
-    $('#post-container').on('submit', '.updateTeamForm', (event) => {
-        event.preventDefault();
-        const singlePost = $(event.target).parents('div.updateId').attr('id');
-        callUpdate(singlePost);
-    });
+  $("#post-container").on("submit", ".updateTeamForm", event => {
+    event.preventDefault();
+    const singlePost = $(event.target)
+      .parents("div.updateId")
+      .attr("id");
+    callUpdate(singlePost);
+  });
 }
 
 function callUpdate(id) {
+  const base =
+    "https://immense-brushlands-16839.herokuapp.com/api/teams/update/";
+  const url = base + id;
 
-    const base = 'https://immense-brushlands-16839.herokuapp.com/api/teams/update/';
-    const url = base + id;
+  const localtoken = localStorage.getItem("localtoken");
+  const title = $("#titleCreate").val();
+  const membersLimit = $("#playerLimitCreate").val();
+  const description = $("#descriptionCreate").val();
+  const rules = $("#rulesCreate").val();
+  const address = $("#search-input").val();
 
-    const localtoken = localStorage.getItem('localtoken');
-    const title = $('#titleCreate').val();
-    const membersLimit = $('#playerLimitCreate').val();
-    const description = $('#descriptionCreate').val();
-    const rules = $('#rulesCreate').val();
-    const address = $('#search-input').val();
+  const googleQuery = address.replace(/\s/g, "+");
+  const geocodeBase =
+    "https://maps.googleapis.com/maps/api/geocode/json?address=";
+  const geoKey = "&key=AIzaSyCVE0EVrFMwT7F0tBXuStCz7mpfmrO_Hd4";
+  const geocodeUrl = geocodeBase + googleQuery + geoKey;
 
-
-    const googleQuery = address.replace(/\s/g, '+');
-    const geocodeBase = 'https://maps.googleapis.com/maps/api/geocode/json?address=';
-    const geoKey = '&key=AIzaSyCVE0EVrFMwT7F0tBXuStCz7mpfmrO_Hd4';
-    const geocodeUrl = geocodeBase + googleQuery + geoKey;
-
-    fetch(geocodeUrl)
+  fetch(geocodeUrl)
+    .then(res => res.json())
+    .then(response => {
+      const { lat, lng } = response.results[0].geometry.location;
+      const newPost = {
+        sport: sport,
+        rules: rules,
+        title: title,
+        membersLimit: membersLimit,
+        description: description,
+        address: address,
+        location: {
+          lat: lat,
+          long: lng
+        }
+      };
+      return newPost;
+    })
+    .then(response => {
+      return fetch(url, {
+        method: "PUT",
+        body: JSON.stringify(response),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localtoken}`
+        }
+      })
         .then(res => res.json())
         .then(response => {
-            const { lat, lng } = response.results[0].geometry.location;
-            const newPost = {
-                sport: sport,
-                rules: rules,
-                title: title,
-                membersLimit: membersLimit,
-                description: description,
-                address: address,
-                location: {
-                    lat: lat,
-                    long: lng
-                }
-            }
-            return newPost;
+          $(".updateSpan").html("Updated. Go back.");
         })
-        .then(response => {
-            return fetch(url, {
-                method: 'PUT',
-                body: JSON.stringify(response),
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${localtoken}`
-                }
-            })
-            .then(res => res.json())
-            .then(response => {
-                    $('.updateSpan').html('Updated. Go back.')
-            })
-            .catch(err => console.log(err));
-        })
-        .catch(err => console.log('whole thing failed', err));
+        .catch(err => console.log(err));
+    })
+    .catch(err => console.log("whole thing failed", err));
 }
 
 function generateUpdateForm(id) {
-
-    $('#post-container').append(`
+  $("#post-container").append(`
     <div id="${id}" class="updateId">
     <div id="signup-Modal" class="modal unhide">
             <div class="class modal-content updateBox" role="update-popup">
@@ -263,52 +276,54 @@ function generateUpdateForm(id) {
             </div>
         </div>
     </div>
-    `)
-    var input = document.getElementById('search-input');
-    var autocomplete = new google.maps.places.Autocomplete(input);
-    
+    `);
+  var input = document.getElementById("search-input");
+  var autocomplete = new google.maps.places.Autocomplete(input);
 }
 
-
 function deleteBtn() {
-    $('#post-container').on('click', 'button.delete', (event) => {
-        const singlePost = $(event.target).parents('div.modal-pop').attr('id');
-        deletePost(singlePost);
-        $(event.target).closest('#signup-Modal').remove();
-        $('body').removeClass('preventScroll');
-    });
+  $("#post-container").on("click", "button.delete", event => {
+    const singlePost = $(event.target)
+      .parents("div.modal-pop")
+      .attr("id");
+    deletePost(singlePost);
+    $(event.target)
+      .closest("#signup-Modal")
+      .remove();
+    $("body").removeClass("preventScroll");
+  });
 }
 
 function deletePost(id) {
-    const base = 'https://immense-brushlands-16839.herokuapp.com/api/teams/post/';
-    const localtoken = localStorage.getItem('localtoken');
-    const url = base + id;
+  const base = "https://immense-brushlands-16839.herokuapp.com/api/teams/post/";
+  const localtoken = localStorage.getItem("localtoken");
+  const url = base + id;
 
-    fetch(url, {
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${localtoken}`
-        },
-        method: 'DELETE'
+  fetch(url, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localtoken}`
+    },
+    method: "DELETE"
+  })
+    .then(response => {
+      if (response.ok) {
+        $(`div[id^=${id}]`).remove();
+        return;
+      }
+      throw new Error(response.status);
     })
-        .then(response => {
-            if (response.ok) {
-                $(`div[id^=${id}]`).remove();
-                return;
-            }
-            throw new Error(response.status);
-        })
-        .catch(err => {
-            console.error(err);
-        });
+    .catch(err => {
+      console.error(err);
+    });
 }
 
 function documentReady() {
-    viewProfile();
-    popPost();
-    updateBtn();
-    registerUpdate();
-    deleteBtn();
+  viewProfile();
+  popPost();
+  updateBtn();
+  registerUpdate();
+  deleteBtn();
 }
 
 $(documentReady);

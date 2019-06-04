@@ -1,21 +1,20 @@
-'use strict';
-const express = require('express');
-const bodyParser = require('body-parser');
-const { Teams } = require('./models');
-const { User } = require('../users/models');
-const passport = require('passport');
+"use strict";
+const express = require("express");
+const bodyParser = require("body-parser");
+const { Teams } = require("./models");
+const { User } = require("../users/models");
+const passport = require("passport");
 const router = express.Router();
 const jsonParser = bodyParser.json();
 
-const jwtAuth = passport.authenticate('jwt', { session: false });
-
+const jwtAuth = passport.authenticate("jwt", { session: false });
 
 // Auth to check if login id is same as parameter id
 // function userAuth(req, res, next) {
 //     Teams.findById(req.params.id)
 //         .then(team => {
 //             if (!team) return res.status(404).end();
-            
+
 //             if ( !== team.members.creator) {
 //                 throw {
 //                     code: 403,
@@ -34,88 +33,91 @@ const jwtAuth = passport.authenticate('jwt', { session: false });
 //         });
 // }
 
-
-
 //view all posts
-router.get('/', (req, res) => {
-    return Teams.find()
-        // .populate('members.joiners.username')
-        .then(teams => res.status(200).json(teams))
-        .catch(err => res.status(500).json({message: 'Internal server error'}));
+router.get("/", (req, res) => {
+  return (
+    Teams.find()
+      // .populate('members.joiners.username')
+      .then(teams => res.status(200).json(teams))
+      .catch(err => res.status(500).json({ message: "Internal server error" }))
+  );
 });
 
-router.get('/:id', [jsonParser, jwtAuth], (req, res) => {
-    console.log('triggered the route', req.params.id);
-    return Teams.find({'members.creator': req.params.id})
-        .then(teams => res.status(200).json(teams))
-        .catch(err => res.status(500).json({message: 'Internal server error'}));
+router.get("/:id", [jsonParser, jwtAuth], (req, res) => {
+  console.log("triggered the route", req.params.id);
+  return Teams.find({ "members.creator": req.params.id })
+    .then(teams => res.status(200).json(teams))
+    .catch(err => res.status(500).json({ message: "Internal server error" }));
 });
 //view modal post in find view
-router.get('/post/:id', [jsonParser, jwtAuth], (req, res) => {
-    console.log(req.params.id);
-    return Teams.findOne({_id: req.params.id})
-        .populate('members.creator', 'username')
-        .then(function (team) {
-            // console.log('populate:', team.members.joiners);
-            res.status(200).json(team);
-        })
-        .catch(err => res.status(500).json({message: err}));
+router.get("/post/:id", [jsonParser, jwtAuth], (req, res) => {
+  console.log(req.params.id);
+  return Teams.findOne({ _id: req.params.id })
+    .populate("members.creator", "username")
+    .then(function(team) {
+      // console.log('populate:', team.members.joiners);
+      res.status(200).json(team);
+    })
+    .catch(err => res.status(500).json({ message: err }));
 });
 
 //make a new post
-router.post('/', [jsonParser, jwtAuth], (req, res) => {
-    console.log(req.user.username);
-    User.findOne({ username: req.user.username})
-        .then(user => {
-            console.log(req.body);
-            Teams.create({
-                members: {
-                    creator: user._id,
-                    joiners: []
-                },
-                sport: req.body.sport,
-                rules: req.body.rules,
-                title: req.body.title,
-                membersLimit: req.body.membersLimit,
-                description: req.body.description,
-                address: req.body.address,
-                location: {
-                    lat: req.body.location.lat,
-                    long: req.body.location.long
-                }
-                // gameDate: req.body.gameDate,
-                // created: { type: Date, default: Date.now }
-            })
-            .then(team => {
-                return res.status(201).json(team);
-            })
-            .catch(err => {
-                console.log(err);
-                return res.status(500).json({message: 'Internal server error'});
-            });
+router.post("/", [jsonParser, jwtAuth], (req, res) => {
+  console.log(req.user.username);
+  User.findOne({ username: req.user.username })
+    .then(user => {
+      console.log(req.body);
+      Teams.create({
+        members: {
+          creator: user._id,
+          joiners: []
+        },
+        sport: req.body.sport,
+        rules: req.body.rules,
+        title: req.body.title,
+        membersLimit: req.body.membersLimit,
+        description: req.body.description,
+        address: req.body.address,
+        location: {
+          lat: req.body.location.lat,
+          long: req.body.location.long
+        }
+        // gameDate: req.body.gameDate,
+        // created: { type: Date, default: Date.now }
+      })
+        .then(team => {
+          return res.status(201).json(team);
         })
         .catch(err => {
-            console.error(err);
-            return res.status(500).json({message: 'Internal server error'});
+          console.log(err);
+          return res.status(500).json({ message: "Internal server error" });
         });
+    })
+    .catch(err => {
+      console.error(err);
+      return res.status(500).json({ message: "Internal server error" });
+    });
 });
 
-router.put('/update/:id', [jsonParser, jwtAuth], (req, res) => {
-    Teams.findByIdAndUpdate(req.params.id,
-        { $set: { ...req.body } }, { new: true })
-        .then(team => {
-            res.status(203).json(team);
-        })
-        .catch(err => res.status(500).json({message: err}));
+router.put("/update/:id", [jsonParser, jwtAuth], (req, res) => {
+  Teams.findByIdAndUpdate(
+    req.params.id,
+    { $set: { ...req.body } },
+    { new: true }
+  )
+    .then(team => {
+      res.status(203).json(team);
+    })
+    .catch(err => res.status(500).json({ message: err }));
 });
 //delete a post userAuth
-router.delete('/post/:id', jwtAuth, (req, res) => {
-    Teams.findByIdAndRemove(req.params.id)
-        .then(team => res.status(204).end())
-        .catch(err => {
-            console.error(4, err);
-            res.status(500).json({ message: "Internal server error" });
-        });
+router.delete("/post/:id", jwtAuth, (req, res) => {
+  Teams.findByIdAndRemove(req.params.id)
+    .then(team => res.status(204).end())
+    .catch(err => {
+      console.error(4, err);
+      res.status(500).json({ message: "Internal server error" });
+    });
 });
 
-module.exports = {router};
+module.exports = { router };

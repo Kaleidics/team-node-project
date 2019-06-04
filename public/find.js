@@ -1,26 +1,31 @@
-'use strict';
+"use strict";
 
 //AJAX function to view all posts, trigged by click event on nav button Find a Game
 function viewPosts() {
-    const url = 'https://immense-brushlands-16839.herokuapp.com/api/teams/';
-    return fetch(url)
-        .then(res => res.json())
-        .then(response => {
-            populatePosts(response);
-        })
-        .catch(err => console.log(err));
+  const url = "https://immense-brushlands-16839.herokuapp.com/api/teams/";
+  return fetch(url)
+    .then(res => res.json())
+    .then(response => {
+      populatePosts(response);
+    })
+    .catch(err => console.log(err));
 }
 
-
 function populatePosts(arr) {
-    let items = ``;
+  let items = ``;
 
-    for (let i = 0; i < arr.length; i++) {
-        const { title, sport, membersLimit, description, _id, address, rules } = arr[i];
-        const { creator, joiners } = arr[i].members;
-        const { lat, long } = arr[i].location;
+  for (let i = 0; i < arr.length; i++) {
+    const {
+      title,
+      sport,
+      membersLimit,
+      description,
+      _id,
+      address,
+      rules
+    } = arr[i];
 
-        items = items.concat(`
+    items = items.concat(`
             <div id="${_id}" class="findView post-item" aria-controls="self-expanded-post">
                 <div class="post-item-list">
                     <ul>
@@ -33,35 +38,35 @@ function populatePosts(arr) {
                 </div>
             </div>
         `);
-    }
-    $('#view-container').html(items);
+  }
+  $("#view-container").html(items);
 }
 
 function viewSinglePost2(postId) {
-    const base = 'https://immense-brushlands-16839.herokuapp.com/api/teams/post/';
-    const localtoken = localStorage.getItem('localtoken');
-    const url = base + postId;
-    return fetch(url, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${localtoken}`
-        }
+  const base = "https://immense-brushlands-16839.herokuapp.com/api/teams/post/";
+  const localtoken = localStorage.getItem("localtoken");
+  const url = base + postId;
+  return fetch(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localtoken}`
+    }
+  })
+    .then(res => res.json())
+    .then(response => {
+      modalizePostFind(response);
     })
-        .then(res => res.json())
-        .then(response => {
-            modalizePostFind(response);
-        })
-        .catch(err => console.log(err));
+    .catch(err => console.log(err));
 }
 
 function modalizePostFind(arr) {
-    const { title, sport, membersLimit, description, _id, address, rules } = arr;
-    let { creator, joiners } = arr.members;
-    const { lat, long } = arr.location;
-    creator = creator.username;
+  const { title, sport, membersLimit, description, _id, address, rules } = arr;
+  let { creator, joiners } = arr.members;
+  const { lat, long } = arr.location;
+  creator = creator.username;
 
-    $('#post-container').append(`
+  $("#post-container").append(`
     <div id="signup-Modal" class="modal unhide" role="self-expanded-post">
             <div class="class modal-content">
                 <a href="#" class="closeBtn" aria-controls="self-expanded-post"><span class="cSpan">Go back</span></a>
@@ -81,43 +86,39 @@ function modalizePostFind(arr) {
             </div>
             </div>
         </div>
-    `)
-    var location = { lat: lat, lng: long };
-    // The map, centered at Uluru
-    var map = new google.maps.Map(
-        document.getElementById('map'), {
-            zoom: 15,
-            center: location,
-            streetViewControl: false,
-            mapTypeControl: false
-        });
-    var marker = new google.maps.Marker({ position: location, map: map });
-    if (
-        navigator.userAgent.match(/Android/i)
-        || navigator.userAgent.match(/webOS/i)
-        || navigator.userAgent.match(/iPhone/i)
-        || navigator.userAgent.match(/iPad/i)
-        || navigator.userAgent.match(/iPod/i)
-        || navigator.userAgent.match(/BlackBerry/i)
-        || navigator.userAgent.match(/Windows Phone/i)
-    ) {
-       
-    }
-    else {
-        $('.modal-content').niceScroll({
-            cursorcolor: "#4285f4",
-            cursoropacitymin: 0.8,
-            background: "#bbb",
-            cursorborder: "0",
-            autohidemode: false,
-            cursorminheight: 30
-            });
-        }
+    `);
+  var location = { lat: lat, lng: long };
+  // The map, centered at Uluru
+  var map = new google.maps.Map(document.getElementById("map"), {
+    zoom: 15,
+    center: location,
+    streetViewControl: false,
+    mapTypeControl: false
+  });
+  var marker = new google.maps.Marker({ position: location, map: map });
+  if (
+    navigator.userAgent.match(/Android/i) ||
+    navigator.userAgent.match(/webOS/i) ||
+    navigator.userAgent.match(/iPhone/i) ||
+    navigator.userAgent.match(/iPad/i) ||
+    navigator.userAgent.match(/iPod/i) ||
+    navigator.userAgent.match(/BlackBerry/i) ||
+    navigator.userAgent.match(/Windows Phone/i)
+  ) {
+  } else {
+    $(".modal-content").niceScroll({
+      cursorcolor: "#4285f4",
+      cursoropacitymin: 0.8,
+      background: "#bbb",
+      cursorborder: "0",
+      autohidemode: false,
+      cursorminheight: 30
+    });
+  }
 }
 
 function documentReady() {
-    viewPosts();
-    // $('.modal-content').niceScroll();
+  viewPosts();
 }
 
 $(documentReady);
